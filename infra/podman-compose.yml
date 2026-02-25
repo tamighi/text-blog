@@ -1,0 +1,24 @@
+version: "3.9"
+
+services:
+  site:
+    build:
+      context: ../clients/site
+    container_name: site_dev
+    ports:
+      - "5174:5174"
+    volumes:
+      - ../clients/site:/app
+      - /app/node_modules
+    working_dir: /app
+
+  admin:
+    build:
+      context: ../clients/admin
+    container_name: admin_dev
+    ports:
+      - "5173:5173"
+    volumes:
+      - ../clients/admin:/app
+      - /app/node_modules
+    working_dir: /app
