@@ -11,7 +11,6 @@ services:
     volumes:
       - ../clients/site:/app
       - site_node_modules:/app/node_modules
-    working_dir: /app
 
   admin_dev:
     build:
@@ -23,8 +22,19 @@ services:
     volumes:
       - ../clients/admin:/app
       - admin_node_modules:/app/node_modules
-    working_dir: /app
+
+  api_dev:
+    build:
+      context: ../api
+      dockerfile: Dockerfile.dev
+    container_name: api_dev
+    ports:
+      - "3000:3000"
+    volumes:
+      - ../api:/app
+      - api_node_modules:/app/node_modules
 
 volumes:
   site_node_modules:
   admin_node_modules:
+  api_node_modules:

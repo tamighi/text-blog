@@ -1,10 +1,16 @@
 {
   "private": true,
   "scripts": {
-    "dev": "podman-compose -f infra/podman-compose.dev.yml up --build -d",
-    "dev:down": "podman-compose -f infra/podman-compose.dev.yml down",
+    "dev:start": "podman-compose -f infra/podman-compose.dev.yml up --build -d",
+    "dev:stop": "podman-compose -f infra/podman-compose.dev.yml down",
     "dev:logs": "podman-compose -f infra/podman-compose.dev.yml logs -f",
-    "prod": "podman-compose -f infra/podman-compose.prod.yml up --build",
+    "dev:start:site": "podman-compose -f infra/podman-compose.dev.yml up -d --build site_dev",
+    "dev:start:admin": "podman-compose -f infra/podman-compose.dev.yml up -d --build admin_dev",
+    "dev:start:api": "podman-compose -f infra/podman-compose.dev.yml up -d --build api_dev",
+    "dev:stop:site": "podman stop site_dev",
+    "dev:stop:admin": "podman stop admin_dev",
+    "dev:stop:api": "podman stop api_dev",
+    "prod": "podman-compose -f infra/podman-compose.prod.yml up -d --build",
     "prod:down": "podman-compose -f infra/podman-compose.prod.yml down"
   }
 }
