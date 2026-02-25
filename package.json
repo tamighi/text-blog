@@ -1,0 +1,10 @@
+{
+  "private": true,
+  "scripts": {
+    "dev": "podman-compose -f infra/podman-compose.dev.yml up --build -d",
+    "dev:down": "podman-compose -f infra/podman-compose.dev.yml down",
+    "dev:logs": "podman-compose -f infra/podman-compose.dev.yml logs -f",
+    "prod": "podman-compose -f infra/podman-compose.prod.yml up --build",
+    "prod:down": "podman-compose -f infra/podman-compose.prod.yml down"
+  }
+}
