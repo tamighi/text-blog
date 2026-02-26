@@ -1,7 +1,7 @@
-Add Postgres container + volume
+Add Prisma
 
-Add Prisma (recommended) and connect via service name (postgres) inside the podman network
+Add migrations (not sure)
 
-Add migrations + seed
+Add API production container
 
-Add nginx /api proxy (dev + prod)
+Add nginx /api proxy in prod
