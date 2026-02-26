@@ -1,5 +1,3 @@
-Add Prisma
-
 Add migrations (not sure)
 
 Add API production container
