@@ -1,17 +1,17 @@
 version: "3.9"
 
 services:
-  site_build:
+  site_prod:
     build:
       context: ../clients/site
-      dockerfile: Dockerfile.build
+      dockerfile: Dockerfile.prod
     volumes:
       - site_dist:/out
 
-  admin_build:
+  admin_prod:
     build:
       context: ../clients/admin
-      dockerfile: Dockerfile.build
+      dockerfile: Dockerfile.prod
     volumes:
       - admin_dist:/out
 
@@ -28,6 +28,29 @@ services:
       - site_dist:/usr/share/nginx/html/site:ro
       - admin_dist:/usr/share/nginx/html/admin:ro
 
+  api_prod:
+    build:
+      context: ../api
+      dockerfile: Dockerfile.prod
+    container_name: api_prod
+    restart: always
+    environment:
+      DATABASE_URL: postgresql://blog:blog_password@postgres_prod:5432/blog
+    depends_on:
+      - postgres_prod
+
+  postgres_prod:
+    image: docker.io/library/postgres:18-alpine
+    container_name: postgres_prod
+    restart: always
+    environment:
+      POSTGRES_USER: blog
+      POSTGRES_PASSWORD: blog_password
+      POSTGRES_DB: blog
+    volumes:
+      - postgres_prod_data:/var/lib/postgresql/data
+
 volumes:
   site_dist:
   admin_dist:
+  postgres_prod_data:
