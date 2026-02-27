@@ -18,6 +18,7 @@
     "prod": "podman-compose -f infra/podman-compose.prod.yml up -d --build",
     "prod:down": "podman-compose -f infra/podman-compose.prod.yml down",
     "prod:logs": "podman-compose -f infra/podman-compose.prod.yml logs -f",
+    "prod:prisma:generate": "podman-compose -f infra/podman-compose.prod.yml exec api_prod npx prisma generate",
     "prod:prisma:migrate": "podman-compose -f infra/podman-compose.prod.yml exec api_prod npx prisma migrate deploy",
     "prod:clean": "podman-compose -f infra/podman-compose.prod.yml down --remove-orphans",
     "prod:clean:all": "podman-compose -f infra/podman-compose.prod.yml down -v --remove-orphans"

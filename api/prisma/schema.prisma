@@ -1,6 +1,6 @@
 generator client {
-  provider = "prisma-client"
-  output   = "../src/generated/prisma"
+  provider     = "prisma-client"
+  output       = "../src/generated/prisma"
   moduleFormat = "cjs"
 }
 
@@ -8,7 +8,60 @@ datasource db {
   provider = "postgresql"
 }
 
-model Text {
-  id      String @id @default(cuid())
-  content String
+enum Lang {
+  EN
+  FR
+}
+
+model Post {
+  id String @id @default(cuid())
+
+  language Lang   @default(EN)
+  content  String
+
+  published Boolean @default(false)
+
+  createdAt DateTime @default(now())
+  updatedAt DateTime @updatedAt
+
+  highlights Highlight[]
+}
+
+model Label {
+  id String @id @default(cuid())
+
+  language Lang   @default(EN)
+  content  String
+
+  conceptId String?
+  concept   Concept? @relation(fields: [conceptId], references: [id], onDelete: SetNull)
+
+  highlights Highlight[]
+}
+
+model Concept {
+  id String @id @default(cuid())
+
+  parentId String?
+  parent   Concept?  @relation("ConceptTree", fields: [parentId], references: [id], onDelete: SetNull)
+  children Concept[] @relation("ConceptTree")
+
+  labels Label[]
+}
+
+model Highlight {
+  id String @id @default(cuid())
+
+  color String
+
+  start  Int
+  length Int
+
+  comment String?
+
+  labelId String
+  label   Label  @relation(fields: [labelId], references: [id], onDelete: Cascade)
+
+  postId String
+  post   Post   @relation(fields: [postId], references: [id], onDelete: Cascade)
 }
