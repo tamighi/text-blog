@@ -1,13 +1,13 @@
 import { Body, Controller, Get, Post } from "@nestjs/common";
+import { CreatePostDto } from "./dto/create-post.dto";
 import { PostService } from "./post.service";
-import { Lang } from "src/generated/prisma/enums";
 
 @Controller("post")
 export class PostController {
   constructor(private readonly post: PostService) {}
 
   @Post()
-  create(@Body() body: { content: string; language?: Lang }) {
+  create(@Body() body: CreatePostDto) {
     return this.post.create(body);
   }
 

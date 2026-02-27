@@ -14,7 +14,7 @@ enum Lang {
 }
 
 model Post {
-  id String @id @default(cuid())
+  id Int @id @default(autoincrement())
 
   language Lang   @default(EN)
   content  String
@@ -28,21 +28,21 @@ model Post {
 }
 
 model Label {
-  id String @id @default(cuid())
+  id Int @id @default(autoincrement())
 
   language Lang   @default(EN)
   content  String
 
-  conceptId String?
+  conceptId Int?
   concept   Concept? @relation(fields: [conceptId], references: [id], onDelete: SetNull)
 
   highlights Highlight[]
 }
 
 model Concept {
-  id String @id @default(cuid())
+  id Int @id @default(autoincrement())
 
-  parentId String?
+  parentId Int?
   parent   Concept?  @relation("ConceptTree", fields: [parentId], references: [id], onDelete: SetNull)
   children Concept[] @relation("ConceptTree")
 
@@ -50,7 +50,7 @@ model Concept {
 }
 
 model Highlight {
-  id String @id @default(cuid())
+  id Int @id @default(autoincrement())
 
   color String
 
@@ -59,9 +59,9 @@ model Highlight {
 
   comment String?
 
-  labelId String
-  label   Label  @relation(fields: [labelId], references: [id], onDelete: Cascade)
+  labelId Int
+  label   Label @relation(fields: [labelId], references: [id], onDelete: Cascade)
 
-  postId String
-  post   Post   @relation(fields: [postId], references: [id], onDelete: Cascade)
+  postId Int
+  post   Post @relation(fields: [postId], references: [id], onDelete: Cascade)
 }
