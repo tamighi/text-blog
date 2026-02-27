@@ -2,10 +2,10 @@ FROM node:24-alpine AS builder
 
 WORKDIR /app
 
-COPY package*.json ./
+COPY api/package*.json ./
 RUN npm ci
 
-COPY . .
+COPY api/. .
 
 RUN npm run build
 

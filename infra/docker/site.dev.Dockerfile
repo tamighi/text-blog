@@ -1,6 +1,6 @@
 FROM node:24-alpine
 
-COPY package*.json ./
+COPY ./clients/site/package*.json ./
 RUN npm install
 
 CMD ["npm", "run", "dev", "--", "--host", "--port", "5174"]

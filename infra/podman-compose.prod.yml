@@ -3,17 +3,30 @@ version: "3.9"
 services:
   site_prod:
     build:
-      context: ../clients/site
-      dockerfile: Dockerfile.prod
+      context: ..
+      dockerfile: infra/docker/site.prod.Dockerfile
+    working_dir: /app/site
     volumes:
       - site_dist:/out
 
   admin_prod:
     build:
-      context: ../clients/admin
-      dockerfile: Dockerfile.prod
+      context: ..
+      dockerfile: infra/docker/admin.prod.Dockerfile
+    working_dir: /app/admin
     volumes:
       - admin_dist:/out
+
+  api_prod:
+    build:
+      context: ..
+      dockerfile: infra/docker/api.prod.Dockerfile
+    container_name: api_prod
+    restart: always
+    environment:
+      DATABASE_URL: postgresql://blog:blog_password@postgres_prod:5432/blog
+    depends_on:
+      - postgres_prod
 
   nginx:
     image: docker.io/library/nginx:1.28-alpine
@@ -27,17 +40,6 @@ services:
       - ./nginx/nginx.conf:/etc/nginx/conf.d/default.conf
       - site_dist:/usr/share/nginx/html/site:ro
       - admin_dist:/usr/share/nginx/html/admin:ro
-
-  api_prod:
-    build:
-      context: ../api
-      dockerfile: Dockerfile.prod
-    container_name: api_prod
-    restart: always
-    environment:
-      DATABASE_URL: postgresql://blog:blog_password@postgres_prod:5432/blog
-    depends_on:
-      - postgres_prod
 
   postgres_prod:
     image: docker.io/library/postgres:18-alpine

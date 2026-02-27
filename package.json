@@ -2,9 +2,6 @@
   "private": true,
   "scripts": {
     "dev": "podman-compose -f infra/podman-compose.dev.yml up --build -d",
-    "dev:site": "podman-compose -f infra/podman-compose.dev.yml up -d --build site_dev",
-    "dev:admin": "podman-compose -f infra/podman-compose.dev.yml up -d --build admin_dev",
-    "dev:api": "podman-compose -f infra/podman-compose.dev.yml up -d --build postgres_dev api_dev",
     "dev:down": "podman-compose -f infra/podman-compose.dev.yml down",
     "dev:logs": "podman-compose -f infra/podman-compose.dev.yml logs -f",
     "dev:exec": "podman-compose -f infra/podman-compose.dev.yml exec",
