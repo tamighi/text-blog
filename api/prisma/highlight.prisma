@@ -1,0 +1,16 @@
+model Highlight {
+  id Int @id @default(autoincrement())
+
+  color String
+
+  start  Int
+  length Int
+
+  comment String?
+
+  labelId Int
+  label   Label @relation(fields: [labelId], references: [id], onDelete: Cascade)
+
+  postId Int
+  post   Post @relation(fields: [postId], references: [id], onDelete: Cascade)
+}

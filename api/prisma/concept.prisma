@@ -1,0 +1,9 @@
+model Concept {
+  id Int @id @default(autoincrement())
+
+  parentId Int?
+  parent   Concept?  @relation("ConceptTree", fields: [parentId], references: [id], onDelete: SetNull)
+  children Concept[] @relation("ConceptTree")
+
+  labels Label[]
+}
