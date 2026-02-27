@@ -1,5 +1,8 @@
+import { RouterProvider } from "@tanstack/react-router";
+import router from "./router";
+
 function App() {
-  return <div className="bg-amber-50">Hello admin</div>;
+  return <RouterProvider router={router} basepath="admin" />;
 }
 
 export default App;
