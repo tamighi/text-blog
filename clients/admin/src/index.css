@@ -12,5 +12,4 @@
   --spacing-rootWidth: 280px;
   --spacing-appbar: 48px;
   --spacing-sidebar-fill: calc(100vh - var(--spacing-appbar));
-  --text-root: 12px;
 }
