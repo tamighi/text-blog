@@ -9,4 +9,5 @@ model Label {
 
   posts      Post[]
   highlights HighlightLabel[]
+  postLabels PostLabel[]
 }

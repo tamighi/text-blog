@@ -1,0 +1,9 @@
+model PostLabel {
+  postId  Int
+  labelId Int
+
+  post  Post  @relation(fields: [postId], references: [id], onDelete: Cascade)
+  label Label @relation(fields: [labelId], references: [id], onDelete: Cascade)
+
+  @@id([postId, labelId])
+}
