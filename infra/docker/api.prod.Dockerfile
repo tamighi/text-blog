@@ -5,7 +5,7 @@ WORKDIR /app
 COPY api/package*.json ./
 RUN npm ci
 
-COPY api/. .
+COPY ./api ./
 
 RUN npm run build
 
