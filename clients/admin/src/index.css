@@ -1,1 +1,16 @@
 @import "tailwindcss";
+
+@theme {
+  --color-elevation-0: #121417;
+  --color-elevation-1: #2a2f34;
+  --color-elevation-2: #1b1f23;
+  --color-elevation-3: #343a40;
+
+  --color-fg-primary: #4db6ac;
+
+  --spacing-input: 24px;
+  --spacing-rootWidth: 280px;
+  --spacing-appbar: 48px;
+  --spacing-sidebar-fill: calc(100vh - var(--spacing-appbar));
+  --text-root: 12px;
+}

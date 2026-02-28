@@ -1,16 +1,11 @@
-import { postService } from "@shared/api/postService";
-import React from "react";
+import PostList from "@/components/PostList";
 
 const PostPage = () => {
-  React.useEffect(() => {
-    const getPosts = async () => {
-      const posts = await postService.list();
-      console.log(posts);
-    };
-
-    getPosts();
-  }, []);
-  return <div>PostPage</div>;
+  return (
+    <div>
+      <PostList />
+    </div>
+  );
 };
 
 export default PostPage;
