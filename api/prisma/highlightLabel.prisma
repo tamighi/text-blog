@@ -1,0 +1,9 @@
+model HighlightLabel {
+  highlightId Int
+  labelId     Int
+
+  highlight Highlight @relation(fields: [highlightId], references: [id], onDelete: Cascade)
+  label     Label     @relation(fields: [labelId], references: [id], onDelete: Cascade)
+
+  @@id([highlightId, labelId])
+}

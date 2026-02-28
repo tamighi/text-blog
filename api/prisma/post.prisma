@@ -8,6 +8,9 @@ model Post {
 
   language Lang @default(EN)
 
+  labelId Int?
+  label   Label? @relation(fields: [labelId], references: [id], onDelete: SetNull)
+
   createdAt DateTime @default(now())
   updatedAt DateTime @updatedAt
 

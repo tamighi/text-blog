@@ -7,5 +7,6 @@ model Label {
   conceptId Int?
   concept   Concept? @relation(fields: [conceptId], references: [id], onDelete: SetNull)
 
-  highlights Highlight[]
+  posts      Post[]
+  highlights HighlightLabel[]
 }
