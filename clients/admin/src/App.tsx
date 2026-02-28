@@ -1,6 +1,6 @@
 import { RouterProvider } from "@tanstack/react-router";
-import router from "./router";
 import { OpenSidebarProvider } from "./layout/shell/OpenSidebarProvider";
+import router from "./router";
 
 function App() {
   return (
