@@ -5,7 +5,7 @@ const Sidebar = () => {
 
   return (
     <div
-      className="bg-elevation-1 h-sidebar-fill"
+      className="bg-elevation-1 min-h-sidebar-fill"
       style={{ display: isOpen ? "block" : "none" }}
     >
       Sidebar

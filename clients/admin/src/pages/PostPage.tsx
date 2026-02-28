@@ -1,4 +1,4 @@
-import PostList from "@/components/PostList";
+import PostList from "@/layout/PostList";
 
 const PostPage = () => {
   return (

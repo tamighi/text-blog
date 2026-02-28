@@ -1,5 +1,5 @@
-import Appbar from "@/components/Appbar";
-import Sidebar from "@/components/Sidebar";
+import Appbar from "@/layout/shell/Appbar";
+import Sidebar from "@/layout/shell/Sidebar";
 import { Outlet } from "@tanstack/react-router";
 
 const Root = () => {
