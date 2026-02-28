@@ -59,12 +59,12 @@ const Paginator: React.FC<PaginatorProps> = ({
         ),
       )}
 
-      <Button
+      <button
         onClick={() => onPageChange(currentPage + 1)}
         disabled={currentPage === totalPages}
       >
         Next
-      </Button>
+      </button>
     </div>
   );
 };
