@@ -1,2 +1,2 @@
 export * from "./types/post";
-export * from "./api/posts";
+export * from "./api/postService";

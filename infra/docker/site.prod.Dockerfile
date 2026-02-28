@@ -1,5 +1,7 @@
 FROM node:24-alpine
 
+WORKDIR /app/site
+
 COPY ./clients/site/package*.json .
 RUN npm ci
 

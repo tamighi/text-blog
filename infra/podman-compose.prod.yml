@@ -5,7 +5,6 @@ services:
     build:
       context: ..
       dockerfile: infra/docker/site.prod.Dockerfile
-    working_dir: /app/site
     volumes:
       - site_dist:/out
 
@@ -13,7 +12,6 @@ services:
     build:
       context: ..
       dockerfile: infra/docker/admin.prod.Dockerfile
-    working_dir: /app/admin
     volumes:
       - admin_dist:/out
 
@@ -32,8 +30,8 @@ services:
     image: docker.io/library/nginx:1.28-alpine
     container_name: web_prod
     depends_on:
-      - site_build
-      - admin_build
+      - site_prod
+      - admin_prod
     ports:
       - "8080:80"
     volumes:

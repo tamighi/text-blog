@@ -1,4 +1,4 @@
-import { Lang } from "./enums";
+import type { Lang } from "./enums";
 
 export interface Post {
   id: string;
