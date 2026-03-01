@@ -1,7 +1,7 @@
 import type { Lang } from "./enums";
 
 export interface Post {
-  id: string;
+  id: number;
   title: string;
   content: string;
   language: Lang;

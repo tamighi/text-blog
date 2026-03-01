@@ -6,7 +6,7 @@ const Sidebar = () => {
 
   return (
     <div
-      className="bg-elevation-1 h-sidebar-fill flex-col gap-4 p-2"
+      className="bg-elevation-1 min-h-appbar-fill flex-col gap-4 p-2"
       style={{ display: isOpen ? "flex" : "none" }}
     >
       <Link to="/">Home</Link>

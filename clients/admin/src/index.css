@@ -7,9 +7,15 @@
   --color-elevation-3: #343a40;
 
   --color-fg-primary: #4db6ac;
+  --color-fg-secondary: #9aa4ad;
 
   --spacing-input: 24px;
   --spacing-rootWidth: 280px;
   --spacing-appbar: 48px;
-  --spacing-sidebar-fill: calc(100vh - var(--spacing-appbar));
+  --spacing-appbar-fill: calc(100vh - var(--spacing-appbar));
+}
+
+body {
+  background-color: var(--color-elevation-1);
+  color: var(--color-fg-primary);
 }

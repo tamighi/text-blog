@@ -7,23 +7,23 @@ import Root from "./pages/Root";
 import HomePage from "./pages/HomePage";
 import PostPage from "./pages/PostPage";
 
-const root = createRootRoute({ component: Root });
+const root = createRootRoute({
+  component: Root,
+});
 
-const routes = [
-  createRoute({
-    getParentRoute: () => root,
-    path: "/",
-    component: HomePage,
-  }),
+const homeRoute = createRoute({
+  getParentRoute: () => root,
+  path: "/",
+  component: HomePage,
+});
 
-  createRoute({
-    getParentRoute: () => root,
-    path: "/post",
-    component: PostPage,
-  }),
-];
+const postsRoute = createRoute({
+  getParentRoute: () => root,
+  path: "/post",
+  component: PostPage,
+});
 
-const routeTree = root.addChildren(routes);
+const routeTree = root.addChildren([homeRoute, postsRoute]);
 
 const router = createRouter({ routeTree });
 

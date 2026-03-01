@@ -2,7 +2,7 @@ import PostList from "@/layout/PostList";
 
 const PostPage = () => {
   return (
-    <div>
+    <div className="min-h-appbar-fill w-full">
       <PostList />
     </div>
   );

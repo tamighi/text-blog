@@ -4,7 +4,7 @@ import { Outlet } from "@tanstack/react-router";
 
 const Root = () => {
   return (
-    <div className="flex flex-col bg-elevation-0 text-fg-primary">
+    <div className="flex flex-col bg-elevation-0">
       <Appbar />
       <div className="flex">
         <Sidebar />

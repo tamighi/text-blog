@@ -1,31 +1,23 @@
-import { postService } from "@shared/api/postService";
-import type { Post } from "@shared/index";
+import usePosts from "@/hooks/query/usePosts";
 import React from "react";
-import PostListItem from "./PostListItem";
 import Paginator from "./Paginator";
+import PostListItem from "./PostListItem";
 
 const POSTS_PER_PAGE = 10;
 
 const PostList = () => {
-  const [posts, setPosts] = React.useState<Post[]>([]);
   const [currentPage, setCurrentPage] = React.useState(1);
 
-  React.useEffect(() => {
-    const getPosts = async () => {
-      const postList = await postService.list();
-      setPosts(postList);
-    };
-
-    getPosts();
-  }, []);
+  const { data: posts = [], isLoading } = usePosts();
 
   const totalPages = Math.ceil(posts.length / POSTS_PER_PAGE);
   const startIndex = (currentPage - 1) * POSTS_PER_PAGE;
   const currentPosts = posts.slice(startIndex, startIndex + POSTS_PER_PAGE);
 
   return (
-    <div>
-      <div>
+    <div className="w-full flex flex-col pl-4">
+      {isLoading && <div>Loading...</div>}
+      <div className="divide-elevation-3 divide-y">
         {currentPosts.map((post) => (
           <PostListItem post={post} key={post.id} />
         ))}
