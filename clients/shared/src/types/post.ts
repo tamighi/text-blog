@@ -4,8 +4,8 @@ export interface Post {
   id: number;
   title: string;
   content: string;
-  language: Lang;
   published: boolean;
+  language: Lang;
   createdAt: string;
   updatedAt: string;
 }
