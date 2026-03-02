@@ -12,15 +12,12 @@ export class HighlightService {
   }
 
   findAll() {
-    return this.prisma.highlight.findMany({
-      include: { post: true, labels: true },
-    });
+    return this.prisma.highlight.findMany();
   }
 
   findOne(id: number) {
     return this.prisma.highlight.findUnique({
       where: { id },
-      include: { post: true, labels: true },
     });
   }
 

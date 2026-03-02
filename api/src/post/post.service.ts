@@ -12,15 +12,12 @@ export class PostService {
   }
 
   findAll() {
-    return this.prisma.post.findMany({
-      include: { labels: true, highlights: true, postLabels: true },
-    });
+    return this.prisma.post.findMany();
   }
 
   findOne(id: number) {
     return this.prisma.post.findUnique({
       where: { id },
-      include: { labels: true, highlights: true, postLabels: true },
     });
   }
 

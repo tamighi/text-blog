@@ -19,7 +19,7 @@ export class ConceptService {
           connect: dto.labelIds.map((id) => ({ id })),
         },
       },
-      include: { labels: true, children: true },
+      include: { labels: true },
     });
   }
 
@@ -34,20 +34,20 @@ export class ConceptService {
           },
         }),
       },
-      include: { labels: true, children: true },
+      include: { labels: true },
     });
   }
 
   findAll() {
     return this.prisma.concept.findMany({
-      include: { labels: true, children: true, parent: true },
+      include: { labels: true },
     });
   }
 
   findOne(id: number) {
     return this.prisma.concept.findUnique({
       where: { id },
-      include: { labels: true, children: true, parent: true },
+      include: { labels: true },
     });
   }
 
