@@ -7,4 +7,4 @@ import { ImportWrittingsService } from "./import-writings.service";
   controllers: [PostController],
   providers: [PostService, ImportWrittingsService],
 })
-export class TextModule {}
+export class PostModule {}
