@@ -1,8 +1,10 @@
 model Label {
   id Int @id @default(autoincrement())
 
-  language Lang   @default(EN)
   content  String
+  color String?
+
+  language Lang   @default(EN)
 
   conceptId Int?
   concept   Concept? @relation(fields: [conceptId], references: [id], onDelete: SetNull)

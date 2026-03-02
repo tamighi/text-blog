@@ -1,7 +1,7 @@
 import usePosts from "@/hooks/query/usePosts";
 import React from "react";
 import Paginator from "./Paginator";
-import PostListItem from "./PostListItem";
+import PostItem from "./PostItem";
 
 const POSTS_PER_PAGE = 10;
 
@@ -15,11 +15,11 @@ const PostList = () => {
   const currentPosts = posts.slice(startIndex, startIndex + POSTS_PER_PAGE);
 
   return (
-    <div className="w-full flex flex-col pl-4">
+    <div className="w-full flex flex-col p-4">
       {isLoading && <div>Loading...</div>}
       <div className="divide-elevation-3 divide-y">
         {currentPosts.map((post) => (
-          <PostListItem post={post} key={post.id} />
+          <PostItem post={post} key={post.id} />
         ))}
       </div>
 

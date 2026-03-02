@@ -11,6 +11,6 @@ export class PostService {
   }
 
   list() {
-    return this.prisma.post.findMany({ orderBy: { id: "desc" } });
+    return this.prisma.post.findMany();
   }
 }
