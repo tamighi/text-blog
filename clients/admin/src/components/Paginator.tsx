@@ -45,26 +45,26 @@ const Paginator: React.FC<PaginatorProps> = ({
 
       {pages.map((page, idx) =>
         page === "…" ? (
-          <span key={`ellipsis-${idx}`} className="px-2 py-1 color-fg-primary">
+          <span key={`ellipsis-${idx}`} className="px-2 py-1">
             …
           </span>
         ) : (
           <Button
             key={page}
             onClick={() => onPageChange(Number(page))}
-            active={currentPage === page}
+            variant={page === currentPage ? "active" : undefined}
           >
             {page}
           </Button>
         ),
       )}
 
-      <button
+      <Button
         onClick={() => onPageChange(currentPage + 1)}
         disabled={currentPage === totalPages}
       >
         Next
-      </button>
+      </Button>
     </div>
   );
 };

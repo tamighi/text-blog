@@ -1,6 +1,6 @@
+import Paginator from "@/components/Paginator";
 import usePosts from "@/hooks/query/usePosts";
 import React from "react";
-import Paginator from "./Paginator";
 import PostItem from "./PostItem";
 
 const POSTS_PER_PAGE = 10;

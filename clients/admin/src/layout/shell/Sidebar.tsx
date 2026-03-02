@@ -10,7 +10,8 @@ const Sidebar = () => {
       style={{ display: isOpen ? "flex" : "none" }}
     >
       <Link to="/">Home</Link>
-      <Link to="/post">Post</Link>
+      <Link to="/post">Posts</Link>
+      <Link to="/label">Labels</Link>
     </div>
   );
 };

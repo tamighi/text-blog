@@ -6,6 +6,7 @@ import {
 import Root from "./pages/Root";
 import HomePage from "./pages/HomePage";
 import PostPage from "./pages/PostPage";
+import LabelPage from "./pages/LabelPage";
 
 const root = createRootRoute({
   component: Root,
@@ -17,13 +18,19 @@ const homeRoute = createRoute({
   component: HomePage,
 });
 
-const postsRoute = createRoute({
+const postRoute = createRoute({
   getParentRoute: () => root,
   path: "/post",
   component: PostPage,
 });
 
-const routeTree = root.addChildren([homeRoute, postsRoute]);
+const labelRoute = createRoute({
+  getParentRoute: () => root,
+  path: "/label",
+  component: LabelPage,
+});
+
+const routeTree = root.addChildren([homeRoute, postRoute, labelRoute]);
 
 const router = createRouter({ routeTree });
 

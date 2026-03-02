@@ -1,10 +1,19 @@
+type ButtonVariant = "active" | "primary" | "secondary" | "success";
+
 type Props = {
-  active?: boolean;
+  variant?: ButtonVariant;
   children: React.ReactNode;
 } & React.ButtonHTMLAttributes<HTMLButtonElement>;
 
+const variantStyles: { [K in ButtonVariant]: string } = {
+  active: "bg-primary text-elevation-0",
+  primary: "bg-primary text-elevation-0",
+  secondary: "bg-elevation-2 text-secondary border border-elevation-3",
+  success: "bg-success text-elevation-0",
+};
+
 const Button = ({
-  active = false,
+  variant = "primary",
   disabled = false,
   children,
   ...buttonProps
@@ -13,11 +22,9 @@ const Button = ({
     <button
       {...buttonProps}
       disabled={disabled}
-      className={` px-3 py-1 rounded ${
-        active
-          ? "bg-fg-primary text-elevation-0"
-          : "bg-elevation-2 text-fg-primary"
-        } ${disabled ? "opacity-50 cursor-default" : "cursor-pointer"} `}
+      className={` px-3 py-1 rounded transition-colors ${variantStyles[variant]}
+        ${disabled ? "opacity-50 cursor-default" : "cursor-pointer hover:brightness-110"}
+        `}
     >
       {children}
     </button>

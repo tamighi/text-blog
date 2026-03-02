@@ -9,6 +9,10 @@
   --color-fg-primary: #4db6ac;
   --color-fg-secondary: #9aa4ad;
 
+  --color-primary: #4db6ac;
+  --color-secondary: #9aa4ad;
+  --color-success: #16a34a;
+
   --spacing-input: 24px;
   --spacing-rootWidth: 280px;
   --spacing-appbar: 48px;
@@ -18,4 +22,28 @@
 body {
   background-color: var(--color-elevation-1);
   color: var(--color-fg-primary);
+}
+
+h2 {
+  @apply text-xl font-semibold
+}
+
+.input {
+  @apply px-3 py-2 rounded-md
+  /**/
+  bg-elevation-2
+  /**/
+  text-fg-primary
+  /**/
+  placeholder:text-fg-secondary
+  /**/
+  border border-elevation-3
+  /**/
+  outline-none
+  /**/
+  transition-colors;
+}
+
+.input:focus {
+  @apply border-fg-primary;
 }

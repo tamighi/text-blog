@@ -1,4 +1,3 @@
-import Button from "@/components/Button";
 import type { Post } from "@shared/index";
 
 type Props = {
@@ -16,7 +15,6 @@ const PostItemContent = ({ post, active }: Props) => {
           active ? "" : "line-clamp-3"
         }`}
       ></p>
-      {active && <Button>Edit</Button>}
     </div>
   );
 };
