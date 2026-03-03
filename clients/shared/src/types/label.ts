@@ -3,9 +3,9 @@ import type { Lang } from "./enums";
 export interface Label {
   id: number;
   content: string;
-  color?: string | null;
+  color?: string;
   language: Lang;
-  conceptId?: number | null;
+  conceptId?: number;
 }
 
 export interface CreateLabelDto {

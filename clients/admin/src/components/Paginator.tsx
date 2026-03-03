@@ -52,7 +52,7 @@ const Paginator: React.FC<PaginatorProps> = ({
           <Button
             key={page}
             onClick={() => onPageChange(Number(page))}
-            variant={page === currentPage ? "active" : undefined}
+            disabled={page === currentPage}
           >
             {page}
           </Button>

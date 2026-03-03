@@ -22,7 +22,9 @@ const Dialog = ({ open, children, onClose, title }: DialogProps) => {
           >
             <div className="flex flex-row justify-between items-center gap-4">
               <h2>{title}</h2>
-              <Button onClick={onClose}>Close</Button>
+              <Button onClick={onClose} variant="outlined">
+                X
+              </Button>
             </div>
             {children}
           </div>

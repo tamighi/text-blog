@@ -63,6 +63,10 @@ const ColorPicker = ({ value = "#23F259", onChange }: ColorPickerProps) => {
   const [hexInput, setHexInput] = React.useState(value);
   const [hue, setHue] = React.useState(hexToHue(value) as number);
 
+  React.useEffect(() => {
+    onChange?.(value);
+  }, []);
+
   const handleHueChange = (value: number) => {
     setHue(value);
     setHexInput(hslToHex(value, 100, 50));
