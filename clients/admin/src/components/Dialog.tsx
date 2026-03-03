@@ -9,6 +9,21 @@ export type DialogProps = {
 };
 
 const Dialog = ({ open, children, onClose, title }: DialogProps) => {
+  React.useEffect(() => {
+    if (!open) return;
+
+    const handleKeyDown = (e: KeyboardEvent) => {
+      if (e.key === "Escape") {
+        onClose?.();
+      }
+    };
+
+    window.addEventListener("keydown", handleKeyDown);
+    return () => {
+      window.removeEventListener("keydown", handleKeyDown);
+    };
+  }, [open, onClose]);
+
   return (
     <>
       {open && (

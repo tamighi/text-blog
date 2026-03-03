@@ -1,9 +1,10 @@
 import Button from "@/components/Button";
 import ColorPicker from "@/components/ColorPicker";
 import Dialog from "@/components/Dialog";
-import { useCreateLabel } from "@/hooks/query/useCreateLabel";
+import useCreateLabel from "@/hooks/query/useCreateLabel";
 import { type CreateLabelDto, type Label } from "@shared/types/label";
 import React from "react";
+import { useToast } from "../toast/ToastProvider";
 
 type Props = {
   open?: boolean;
@@ -11,8 +12,13 @@ type Props = {
 };
 
 const LabelDialog = ({ open = false, onClose }: Props) => {
-  const { mutate } = useCreateLabel();
   const [label, setLabel] = React.useState<Partial<Label>>({ content: "" });
+
+  const { toast } = useToast();
+  const { mutate, isPending } = useCreateLabel({
+    onSuccess: () => toast({ content: "Label created." }),
+    onError: () => toast({ content: "Error" }),
+  });
 
   const onLabelChange = (e: Partial<Label>) => {
     setLabel((old) => ({ ...old, ...e }));
@@ -29,6 +35,7 @@ const LabelDialog = ({ open = false, onClose }: Props) => {
 
   const onCreate = () => {
     mutate(label as CreateLabelDto);
+    reset();
   };
 
   const valid = React.useMemo(() => !!label.color && !!label.content, [label]);
@@ -50,7 +57,7 @@ const LabelDialog = ({ open = false, onClose }: Props) => {
         </div>
         <div className="flex flex-row items-center justify-end gap-4">
           <Button onClick={onClose}>Cancel</Button>
-          <Button disabled={!valid} onClick={onCreate}>
+          <Button disabled={!valid || isPending} onClick={onCreate}>
             Create
           </Button>
         </div>

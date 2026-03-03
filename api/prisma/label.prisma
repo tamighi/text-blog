@@ -1,7 +1,7 @@
 model Label {
   id Int @id @default(autoincrement())
 
-  content  String
+  content  String @unique
   color String?
 
   language Lang   @default(EN)
