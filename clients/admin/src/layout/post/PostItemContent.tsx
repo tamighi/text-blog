@@ -12,7 +12,7 @@ const PostItemContent = ({ post, active }: Props) => {
         contentEditable={active}
         dangerouslySetInnerHTML={{ __html: post.content }}
         className={`mt-2 text-sm text-fg-secondary whitespace-break-spaces ${
-          active ? "" : "line-clamp-3"
+          active ? "" : "max-h-14 overflow-hidden"
         }`}
       ></p>
     </div>
