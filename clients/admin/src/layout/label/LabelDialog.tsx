@@ -11,7 +11,7 @@ import Autocomplete from "@/components/Autocomplete";
 type Props = {
   open?: boolean;
   onClose?: () => void;
-  operation?: "create" | "assign";
+  operation?: "create" | "all";
 };
 
 const LabelDialog = ({
@@ -42,7 +42,7 @@ const LabelDialog = ({
       content,
       color: label.color,
     };
-    setLabel(newLabel);
+    onLabelChange(newLabel);
   };
 
   const reset = () => {
