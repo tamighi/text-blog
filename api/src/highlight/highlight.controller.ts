@@ -1,19 +1,17 @@
 import {
-  Controller,
-  Get,
-  Post,
   Body,
-  Param,
-  Patch,
+  Controller,
   Delete,
+  Get,
+  Param,
   ParseIntPipe,
+  Patch,
+  Post,
 } from "@nestjs/common";
-import { ApiTags } from "@nestjs/swagger";
-import { HighlightService } from "./highlight.service";
 import { CreateHighlightDto } from "./dto/create-highlight.dto";
 import { UpdateHighlightDto } from "./dto/update-highlight.dto";
+import { HighlightService } from "./highlight.service";
 
-@ApiTags("highlights")
 @Controller("highlights")
 export class HighlightController {
   constructor(private readonly highlightService: HighlightService) {}

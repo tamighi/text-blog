@@ -2,7 +2,7 @@ model Label {
   id Int @id @default(autoincrement())
 
   content  String @unique
-  color String?
+  color String
 
   language Lang   @default(EN)
 

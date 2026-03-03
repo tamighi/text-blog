@@ -11,7 +11,6 @@ import { ApiTags } from "@nestjs/swagger";
 import { HighlightLabelService } from "./highlight-label.service";
 import { CreateHighlightLabelDto } from "./dto/create-highlight-label.dto";
 
-@ApiTags("highlight-labels")
 @Controller("highlight-labels")
 export class HighlightLabelController {
   constructor(private readonly service: HighlightLabelService) {}

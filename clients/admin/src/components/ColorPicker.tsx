@@ -25,13 +25,12 @@ const hslToHex = (h: number, s: number, l: number) => {
 
 const hexToHue = (hex: string) => {
   const cleaned = hex.replace("#", "");
-  if (cleaned.length !== 6) return null;
+
+  if (!/^[0-9a-fA-F]{6}$/.test(cleaned)) return null;
 
   const r = parseInt(cleaned.slice(0, 2), 16) / 255;
   const g = parseInt(cleaned.slice(2, 4), 16) / 255;
   const b = parseInt(cleaned.slice(4, 6), 16) / 255;
-
-  if ([r, g, b].some((v) => Number.isNaN(v))) return null;
 
   const max = Math.max(r, g, b);
   const min = Math.min(r, g, b);
@@ -61,38 +60,42 @@ export type ColorPickerProps = {
 
 const ColorPicker = ({ value = "#23F259", onChange }: ColorPickerProps) => {
   const [hexInput, setHexInput] = React.useState(value);
+  const [displayColor, setDisplayColor] = React.useState(value);
   const [hue, setHue] = React.useState(hexToHue(value) as number);
 
   React.useEffect(() => {
     onChange?.(value);
   }, []);
 
+  React.useEffect(() => {
+    setHexInput(value);
+    setDisplayColor(value);
+    setHue(hexToHue(value) as number);
+  }, [value]);
+
   const handleHueChange = (value: number) => {
-    setHue(value);
-    setHexInput(hslToHex(value, 100, 50));
-    onChange?.(hexInput);
+    onChange?.(hslToHex(value, 100, 50));
   };
 
   const handleHexChange = (value: string) => {
     setHexInput(value);
-    onChange?.(hexInput);
-
     const h = hexToHue(value);
-    if (h !== null) setHue(h);
+    if (h) {
+      onChange?.(value);
+    }
   };
 
   return (
     <div className="flex flex-col gap-4">
       <div className="flex gap-4">
         <input
-          type="text"
           value={hexInput}
           onChange={(e) => handleHexChange(e.target.value)}
           className="input w-full"
         />
         <div
           className="aspect-square rounded-lg h-10"
-          style={{ backgroundColor: hexInput }}
+          style={{ backgroundColor: displayColor }}
         />
       </div>
       <input
