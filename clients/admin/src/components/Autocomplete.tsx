@@ -2,31 +2,33 @@ import React from "react";
 
 type AutocompleteProps = {
   options: string[];
-  value: string;
-  onChange: (value: string) => void;
+  value?: string;
+  onChange?: (value: string) => void;
   placeholder?: string;
 };
 
 const Autocomplete = ({
   options,
-  value,
+  value: inputValue,
   onChange,
   placeholder,
 }: AutocompleteProps) => {
   const [open, setOpen] = React.useState(false);
 
   const filtered = React.useMemo(() => {
-    if (!value) return options;
-    return options.filter((o) => o.toLowerCase().includes(value.toLowerCase()));
-  }, [options, value]);
+    if (!inputValue) return options;
+    return options.filter((o) =>
+      o.toLowerCase().includes(inputValue.toLowerCase()),
+    );
+  }, [options, inputValue]);
 
   return (
     <div className="relative">
       <input
-        value={value}
+        value={inputValue}
         placeholder={placeholder}
         onChange={(e) => {
-          onChange(e.target.value);
+          onChange?.(e.target.value);
           setOpen(true);
         }}
         onFocus={() => setOpen(true)}
@@ -43,7 +45,7 @@ const Autocomplete = ({
             <li
               key={option}
               onMouseDown={() => {
-                onChange(option);
+                onChange?.(option);
                 setOpen(false);
               }}
               className="cursor-pointer px-3 py-2 hover:bg-elevation-2"

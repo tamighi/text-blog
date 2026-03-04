@@ -5,20 +5,13 @@ import useCreateLabel from "@/hooks/query/useCreateLabel";
 import { type CreateLabelDto, type Label } from "@shared/types/label";
 import React from "react";
 import { useToast } from "../toast/ToastProvider";
-import useLabels from "@/hooks/query/useLabels";
-import Autocomplete from "@/components/Autocomplete";
 
 type Props = {
   open?: boolean;
   onClose?: () => void;
-  operation?: "create" | "all";
 };
 
-const LabelDialog = ({
-  open = false,
-  onClose,
-  operation = "create",
-}: Props) => {
+const CreateLabelDialog = ({ open = false, onClose }: Props) => {
   const [label, setLabel] = React.useState<CreateLabelDto>({ content: "" });
 
   const { toast } = useToast();
@@ -27,22 +20,8 @@ const LabelDialog = ({
     onError: () => toast({ content: "Error" }),
   });
 
-  const { data: labels = [] } = useLabels({ enabled: operation !== "create" });
-  const labelOptions = React.useMemo(
-    () => (operation === "create" ? [] : labels.map((l) => l.content)),
-    [labels],
-  );
-
   const onLabelChange = (e: Partial<Label>) => {
     setLabel((old) => ({ ...old, ...e }));
-  };
-
-  const onAutocompleteChange = (content: string) => {
-    const newLabel = labels.find((v) => v.content === content) ?? {
-      content,
-      color: label.color,
-    };
-    onLabelChange(newLabel);
   };
 
   const reset = () => {
@@ -65,11 +44,11 @@ const LabelDialog = ({
     <Dialog open={open} onClose={_onClose} title={"New label"}>
       <div className="flex flex-col gap-8">
         <div className="flex flex-row items-start gap-4">
-          <Autocomplete
+          <input
             placeholder="Name"
-            options={labelOptions}
+            className="input"
             value={label.content}
-            onChange={onAutocompleteChange}
+            onChange={(e) => onLabelChange({ content: e.target.value })}
           />
           <ColorPicker
             value={label.color}
@@ -87,4 +66,4 @@ const LabelDialog = ({
   );
 };
 
-export default LabelDialog;
+export default CreateLabelDialog;

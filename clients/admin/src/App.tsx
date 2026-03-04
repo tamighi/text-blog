@@ -4,7 +4,9 @@ import { OpenSidebarProvider } from "./layout/shell/OpenSidebarProvider";
 import { ToastProvider } from "./layout/toast/ToastProvider";
 import router from "./router";
 
-const queryClient = new QueryClient();
+const queryClient = new QueryClient({
+  defaultOptions: { queries: { refetchOnWindowFocus: false } },
+});
 
 function App() {
   return (

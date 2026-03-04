@@ -48,7 +48,7 @@ services:
       POSTGRES_PASSWORD: blog_password
       POSTGRES_DB: blog
     volumes:
-      - postgres_prod_data:/var/lib/postgresql/data
+      - postgres_prod_data:/var/lib/postgresql
 
 volumes:
   site_dist:

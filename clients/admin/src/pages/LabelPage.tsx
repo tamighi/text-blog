@@ -1,5 +1,5 @@
 import Button from "@/components/Button";
-import LabelDialog from "@/layout/label/LabelDialog";
+import CreateLabelDialog from "@/layout/label/CreateLabelDialog";
 import LabelDrawing from "@/layout/label/LabelDrawing";
 import React from "react";
 
@@ -9,7 +9,7 @@ const LabelPage = () => {
   return (
     <div>
       <LabelDrawing />
-      <LabelDialog
+      <CreateLabelDialog
         operation="create"
         open={open}
         onClose={() => setOpen(false)}
