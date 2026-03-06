@@ -18,10 +18,14 @@ const AssignLabelDialog = ({ open = false, onClose, postId }: Props) => {
 
   const { toast } = useToast();
   const { mutate, isPending } = useCreatePostLabel({
-    onSuccess: () => toast({ content: "Label assigned." }),
+    onSuccess: () => {
+      toast({ content: "Label assigned." });
+      _onClose();
+    },
     onError: () => toast({ content: "Error" }),
   });
 
+  // TODO: filter the ones already assigned
   const { data: labels = [] } = useLabels();
   const labelOptions = React.useMemo(
     () => labels.map((l) => l.content),
@@ -44,7 +48,6 @@ const AssignLabelDialog = ({ open = false, onClose, postId }: Props) => {
 
   const onAssign = () => {
     mutate({ postId, labelId: label!.id });
-    _onClose();
   };
 
   return (

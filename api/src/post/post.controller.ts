@@ -7,6 +7,7 @@ import {
   ParseIntPipe,
   Patch,
   Post,
+  Query,
   UploadedFile,
   UseInterceptors,
 } from "@nestjs/common";
@@ -17,6 +18,7 @@ import { CreatePostDto } from "./dto/create-post.dto";
 import { UpdatePostDto } from "./dto/update-post.dto";
 import { ImportWrittingsService } from "./import-writings.service";
 import { PostService } from "./post.service";
+import { PostQueryDto } from "./dto/post-query.dto";
 
 @Controller("post")
 export class PostController {
@@ -31,8 +33,8 @@ export class PostController {
   }
 
   @Get()
-  findAll() {
-    return this.postService.findAll();
+  findAll(@Query() query: PostQueryDto) {
+    return this.postService.findAll(query);
   }
 
   @Get(":id")

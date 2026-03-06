@@ -16,7 +16,10 @@ const CreateLabelDialog = ({ open = false, onClose }: Props) => {
 
   const { toast } = useToast();
   const { mutate, isPending } = useCreateLabel({
-    onSuccess: () => toast({ content: "Label created." }),
+    onSuccess: () => {
+      toast({ content: "Label created." });
+      _onClose();
+    },
     onError: () => toast({ content: "Error" }),
   });
 
@@ -35,7 +38,6 @@ const CreateLabelDialog = ({ open = false, onClose }: Props) => {
 
   const onCreate = () => {
     mutate(label as CreateLabelDto);
-    _onClose();
   };
 
   const valid = React.useMemo(() => !!label.color && !!label.content, [label]);

@@ -9,25 +9,32 @@ type AutocompleteProps = {
 
 const Autocomplete = ({
   options,
-  value: inputValue,
+  value,
   onChange,
   placeholder,
 }: AutocompleteProps) => {
   const [open, setOpen] = React.useState(false);
+  const [internalValue, setInternalValue] = React.useState(value ?? "");
+
+  React.useEffect(() => {
+    if (value) {
+      setInternalValue(value);
+    }
+  }, [value]);
 
   const filtered = React.useMemo(() => {
-    if (!inputValue) return options;
     return options.filter((o) =>
-      o.toLowerCase().includes(inputValue.toLowerCase()),
+      o.toLowerCase().includes(internalValue.toLowerCase()),
     );
-  }, [options, inputValue]);
+  }, [options, internalValue]);
 
   return (
     <div className="relative">
       <input
-        value={inputValue}
+        value={internalValue}
         placeholder={placeholder}
         onChange={(e) => {
+          setInternalValue(e.target.value);
           onChange?.(e.target.value);
           setOpen(true);
         }}
@@ -45,6 +52,7 @@ const Autocomplete = ({
             <li
               key={option}
               onMouseDown={() => {
+                setInternalValue(option);
                 onChange?.(option);
                 setOpen(false);
               }}

@@ -23,3 +23,7 @@ export interface UpdatePostDto {
   language?: Lang;
   published?: boolean;
 }
+
+export interface QueryPostDto {
+  includeLabels?: boolean;
+}
