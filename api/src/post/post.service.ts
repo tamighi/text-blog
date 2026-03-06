@@ -12,7 +12,7 @@ export class PostService {
     return this.prisma.post.create({ data });
   }
 
-  findAll(query: PostQueryDto) {
+  findAll(query: PostQueryDto = {}) {
     return this.prisma.post.findMany({
       include: {
         postLabels: {

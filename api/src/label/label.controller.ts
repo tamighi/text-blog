@@ -7,10 +7,12 @@ import {
   ParseIntPipe,
   Patch,
   Post,
+  Query,
 } from "@nestjs/common";
 import { CreateLabelDto } from "./dto/create-label.dto";
 import { UpdateLabelDto } from "./dto/update-label.dto";
 import { LabelService } from "./label.service";
+import { LabelQueryDto } from "./dto/label-query.dto";
 
 @Controller("labels")
 export class LabelController {
@@ -22,8 +24,8 @@ export class LabelController {
   }
 
   @Get()
-  findAll() {
-    return this.labelService.findAll();
+  findAll(@Query() query: LabelQueryDto) {
+    return this.labelService.findAll(query);
   }
 
   @Get(":id")

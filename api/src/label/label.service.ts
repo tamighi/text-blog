@@ -2,6 +2,8 @@ import { Injectable } from "@nestjs/common";
 import { PrismaService } from "src/prisma/prisma.service";
 import { CreateLabelDto } from "./dto/create-label.dto";
 import { UpdateLabelDto } from "./dto/update-label.dto";
+import { LabelQueryDto } from "./dto/label-query.dto";
+import { LabelWhereInput } from "src/generated/prisma/models";
 
 @Injectable()
 export class LabelService {
@@ -11,8 +13,14 @@ export class LabelService {
     return this.prisma.label.create({ data });
   }
 
-  findAll() {
-    return this.prisma.label.findMany();
+  findAll(query: LabelQueryDto = {}) {
+    const where: LabelWhereInput | undefined = query.excludePostId
+      ? {
+          postLabels: { none: { postId: query.excludePostId } },
+        }
+      : undefined;
+
+    return this.prisma.label.findMany({ where });
   }
 
   findOne(id: number) {

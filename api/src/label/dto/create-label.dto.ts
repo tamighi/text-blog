@@ -19,7 +19,7 @@ export class CreateLabelDto {
   @IsOptional()
   @IsString()
   @MaxLength(10)
-  color?: string;
+  color: string;
 
   @ApiProperty({ enum: Lang, default: Lang.EN })
   @IsEnum(Lang)
