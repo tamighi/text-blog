@@ -1,4 +1,4 @@
-import type { CreateLabelDto, Label, UpdateLabelDto } from "../types/label";
+import type { CreateLabelDto, Label, QueryLabelDto, UpdateLabelDto } from "../types/label";
 import { http } from "./http";
 
 interface LabelsApiConfig {
@@ -12,8 +12,15 @@ class LabelsApi {
     this.base = cfg.baseUrl.replace(/\/$/, "");
   }
 
-  list(): Promise<Label[]> {
-    return http<Label[]>(`${this.base}/labels`);
+  list(query: QueryLabelDto = {}): Promise<Label[]> {
+    const params = new URLSearchParams(
+      Object.entries(query)
+        .filter(([, v]) => v !== undefined && v !== null)
+        .map(([k, v]) => [k, String(v)])
+    );
+
+    const qs = params.toString();
+    return http<Label[]>(`${this.base}/labels?${qs}`);
   }
 
   create(dto: CreateLabelDto): Promise<Label> {

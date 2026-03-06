@@ -22,6 +22,7 @@ export class CreateLabelDto {
   color: string;
 
   @ApiProperty({ enum: Lang, default: Lang.EN })
+  @IsOptional()
   @IsEnum(Lang)
   language: Lang;
 

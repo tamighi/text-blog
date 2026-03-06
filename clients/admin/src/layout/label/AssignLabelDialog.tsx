@@ -25,8 +25,11 @@ const AssignLabelDialog = ({ open = false, onClose, postId }: Props) => {
     onError: () => toast({ content: "Error" }),
   });
 
-  // TODO: filter the ones already assigned
-  const { data: labels = [] } = useLabels();
+  const { data: labels = [] } = useLabels({
+    enabled: open,
+    queryParams: { excludePostId: postId },
+  });
+
   const labelOptions = React.useMemo(
     () => labels.map((l) => l.content),
     [labels],

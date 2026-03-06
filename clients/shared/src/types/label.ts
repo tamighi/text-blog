@@ -21,3 +21,7 @@ export interface UpdateLabelDto {
   language?: Lang;
   conceptId?: number;
 }
+
+export interface QueryLabelDto {
+  excludePostId?: number;
+}
