@@ -1,7 +1,8 @@
 import Button from "@/components/Button";
 import type { Post } from "@shared/index";
-import AssignLabelDialog from "../label/AssignLabelDialog";
 import React from "react";
+import AssignLabelDialog from "../label/AssignLabelDialog";
+import LabelItem from "../label/LabelItem";
 
 type Props = {
   post: Post;
@@ -18,8 +19,11 @@ const PostItemHeader = ({ post, onClick, active }: Props) => {
         {post.title}
       </h2>
 
-      <span>labels</span>
-      {active && <Button onClick={() => setOpen(true)}>Add label</Button>}
+      {post.postLabels.map((postLabel) => (
+        <LabelItem label={postLabel.label} key={postLabel.label.id} />
+      ))}
+
+      {active && <Button onClick={() => setOpen(true)}>+</Button>}
 
       <AssignLabelDialog
         postId={post.id}

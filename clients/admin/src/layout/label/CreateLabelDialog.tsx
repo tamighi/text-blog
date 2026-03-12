@@ -12,7 +12,10 @@ type Props = {
 };
 
 const CreateLabelDialog = ({ open = false, onClose }: Props) => {
-  const [label, setLabel] = React.useState<CreateLabelDto>({ content: "" });
+  const [label, setLabel] = React.useState<CreateLabelDto>({
+    content: "",
+    color: "",
+  });
 
   const { toast } = useToast();
   const { mutate, isPending } = useCreateLabel({
@@ -28,7 +31,7 @@ const CreateLabelDialog = ({ open = false, onClose }: Props) => {
   };
 
   const reset = () => {
-    setLabel({ content: "" });
+    setLabel({ content: "", color: "" });
   };
 
   const _onClose = () => {

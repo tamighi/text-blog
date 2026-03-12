@@ -56,12 +56,17 @@ const hexToHue = (hex: string) => {
 export type ColorPickerProps = {
   value?: string;
   onChange?: (v: string) => void;
+  disabled?: boolean;
 };
 
-const ColorPicker = ({ value = "#23F259", onChange }: ColorPickerProps) => {
+const ColorPicker = ({
+  value = "#23F259",
+  onChange,
+  disabled = false,
+}: ColorPickerProps) => {
   const [hexInput, setHexInput] = React.useState(value);
   const [displayColor, setDisplayColor] = React.useState(value);
-  const [hue, setHue] = React.useState(hexToHue(value) as number);
+  const [hue, setHue] = React.useState(hexToHue(value) ?? (0 as number));
 
   React.useEffect(() => {
     onChange?.(value);
@@ -92,6 +97,7 @@ const ColorPicker = ({ value = "#23F259", onChange }: ColorPickerProps) => {
           value={hexInput}
           onChange={(e) => handleHexChange(e.target.value)}
           className="input w-full"
+          disabled={disabled}
         />
         <div
           className="aspect-square rounded-lg h-10"
@@ -100,14 +106,17 @@ const ColorPicker = ({ value = "#23F259", onChange }: ColorPickerProps) => {
       </div>
       <input
         type="range"
+        disabled={disabled}
         min={0}
         max={360}
         value={hue}
         onChange={(e) => handleHueChange(Number(e.target.value))}
-        className="w-full h-2 rounded-lg appearance-none cursor-pointer"
+        className="w-full h-2 rounded-lg appearance-none"
         style={{
           background:
             "linear-gradient(to right, red, yellow, lime, cyan, blue, magenta, red)",
+          filter: disabled ? "brightness(0.5)" : "none",
+          cursor: disabled ? "default" : "pointer",
         }}
       />
     </div>

@@ -1,4 +1,5 @@
 import type { Lang } from "./enums";
+import { PostLabel } from "./postLabel";
 
 export interface Post {
   id: number;
@@ -8,6 +9,7 @@ export interface Post {
   language: Lang;
   createdAt: string;
   updatedAt: string;
+  postLabels: PostLabel[];
 }
 
 export interface CreatePostDto {

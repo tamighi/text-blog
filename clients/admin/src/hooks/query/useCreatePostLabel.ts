@@ -15,8 +15,8 @@ const useCreatePostLabel = ({
 
   return useMutation({
     mutationFn: (dto: CreatePostLabelDto) => postLabelService.create(dto),
-    onSuccess: (data) => {
-      queryClient.invalidateQueries({ queryKey: ["postLabels", data.postId] });
+    onSuccess: () => {
+      queryClient.invalidateQueries({ queryKey: ["posts"] });
       onSuccess?.();
     },
     onError,
