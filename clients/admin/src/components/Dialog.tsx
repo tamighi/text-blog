@@ -33,7 +33,7 @@ const Dialog = ({ open, children, onClose, title }: DialogProps) => {
         >
           <div
             className="bg-elevation-1 rounded-lg shadow-lg p-4 flex flex-col
-              gap-8 min-w-80"
+              gap-4 min-w-80"
           >
             <div className="flex flex-row justify-between items-center gap-4">
               <h2>{title}</h2>

@@ -13,6 +13,7 @@ const useDeleteLabel = ({ onSuccess, onError }: UseDeleteLabelProps = {}) => {
     mutationFn: (id: number) => labelService.remove(id),
     onSuccess: () => {
       queryClient.invalidateQueries({ queryKey: ["labels"] });
+      queryClient.invalidateQueries({ queryKey: ["posts"] });
       onSuccess?.();
     },
     onError,

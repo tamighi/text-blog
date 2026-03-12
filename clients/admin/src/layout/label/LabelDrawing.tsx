@@ -1,4 +1,5 @@
 import useLabels from "@/hooks/query/useLabels";
+import LabelItem from "./LabelItem";
 
 const LabelDrawing = () => {
   const { data: labels = [], isLoading } = useLabels();
@@ -8,13 +9,7 @@ const LabelDrawing = () => {
       {isLoading && <div>Loading...</div>}
       <div className="flex flex-col gap-4">
         {labels.map((label) => (
-          <span
-            key={label.id}
-            className="text-fg-secondary"
-            style={{ backgroundColor: label.color }}
-          >
-            {label.content}
-          </span>
+          <LabelItem key={label.id} label={label} />
         ))}
       </div>
     </div>
