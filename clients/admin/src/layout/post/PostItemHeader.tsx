@@ -20,7 +20,11 @@ const PostItemHeader = ({ post, onClick, active }: Props) => {
       </h2>
 
       {post.postLabels.map((postLabel) => (
-        <LabelItem label={postLabel.label} key={postLabel.label.id} />
+        <LabelItem
+          label={postLabel.label}
+          postId={post.id}
+          key={postLabel.label.id}
+        />
       ))}
 
       {active && <Button onClick={() => setOpen(true)}>+</Button>}

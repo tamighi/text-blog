@@ -11,7 +11,7 @@ const Toast = ({ content, open }: ToastProps) => {
           className="fixed bottom-12 w-full flex items-center justify-center
             z-50"
         >
-          <div className="min-w-64 bg-elevation-1 border rounded-lg p-4">
+          <div className="bg-elevation-1 border rounded-lg p-4">
             <span>{content}</span>
           </div>
         </div>
