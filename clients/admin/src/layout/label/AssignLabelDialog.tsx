@@ -71,7 +71,7 @@ const AssignLabelDialog = ({ open = false, onClose, postId }: Props) => {
   };
 
   const onAssign = () => {
-    assignMutate({ postId, labelId: label!.id });
+    assignMutate({ postId, labelId: label!.id, comment });
   };
 
   const onCreateAndAssign = () => {
