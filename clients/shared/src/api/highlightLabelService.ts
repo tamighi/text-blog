@@ -19,9 +19,9 @@ class HighlightLabelApi {
     });
   }
 
-  remove(highlightId: number, labelId: number): Promise<{ highlightId: number; labelId: number }> {
-    return http<{ highlightId: number; labelId: number }>(
-      `${this.base}/highlight-labels/${highlightId}/${labelId}`,
+  remove(id: number): Promise<{ id: number }> {
+    return http<{ id: number }>(
+      `${this.base}/highlight-labels/${id}`,
       { method: "DELETE" },
     );
   }

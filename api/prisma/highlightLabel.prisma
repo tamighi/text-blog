@@ -1,9 +1,11 @@
 model HighlightLabel {
-  highlightId Int
-  labelId     Int
+  id Int @id @default(autoincrement())
 
+  highlightId Int
   highlight Highlight @relation(fields: [highlightId], references: [id], onDelete: Cascade)
+  labelId     Int
   label     Label     @relation(fields: [labelId], references: [id], onDelete: Cascade)
 
-  @@id([highlightId, labelId])
+  createdAt DateTime @default(now())
+  updatedAt DateTime @updatedAt
 }

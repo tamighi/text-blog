@@ -14,7 +14,6 @@ export class ConceptService {
 
     return this.prisma.concept.create({
       data: {
-        parentId: dto.parentId,
         labels: {
           connect: dto.labelIds.map((id) => ({ id })),
         },
@@ -27,7 +26,6 @@ export class ConceptService {
     return this.prisma.concept.update({
       where: { id },
       data: {
-        parentId: dto.parentId,
         ...(dto.labelIds && {
           labels: {
             set: dto.labelIds.map((id) => ({ id })),

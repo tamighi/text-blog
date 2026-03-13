@@ -15,16 +15,21 @@ export class CreateLabelDto {
   @MaxLength(50)
   content: string;
 
-  @ApiPropertyOptional()
-  @IsOptional()
+  @ApiProperty()
   @IsString()
   @MaxLength(10)
   color: string;
 
+  @ApiPropertyOptional()
+  @IsOptional()
+  @IsString()
+  @MaxLength(500)
+  definition?: string;
+
   @ApiProperty({ enum: Lang, default: Lang.EN })
   @IsOptional()
   @IsEnum(Lang)
-  language: Lang;
+  language?: Lang;
 
   @ApiPropertyOptional()
   @IsOptional()

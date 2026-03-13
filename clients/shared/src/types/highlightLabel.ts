@@ -1,4 +1,5 @@
 export interface HighlightLabel {
+  id: number;
   highlightId: number;
   labelId: number;
 }

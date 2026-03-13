@@ -1,4 +1,4 @@
-import type { CreatePostLabelDto, PostLabel } from "../types/postLabel";
+import type { CreatePostLabelDto, PostLabel, UpdatePostLabelDto } from "../types/postLabel";
 import { http } from "./http";
 
 class PostLabelApi {
@@ -19,9 +19,16 @@ class PostLabelApi {
     });
   }
 
-  remove(postId: number, labelId: number): Promise<{ postId: number; labelId: number }> {
-    return http<{ postId: number; labelId: number }>(
-      `${this.base}/post-labels/${postId}/${labelId}`,
+  update(id: number, dto: UpdatePostLabelDto): Promise<PostLabel> {
+    return http<PostLabel>(`${this.base}/post-labels/${id}`, {
+      method: "PATCH",
+      body: JSON.stringify(dto),
+    });
+  }
+
+  remove(id: number) {
+    return http<{ id: number }>(
+      `${this.base}/post-labels/${id}`,
       { method: "DELETE" },
     );
   }

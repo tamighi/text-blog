@@ -19,6 +19,7 @@ const AssignLabelDialog = ({ open = false, onClose, postId }: Props) => {
   const [label, setLabel] = React.useState<Label>();
   const [labelStr, setlabelStr] = React.useState("");
   const [color, setColor] = React.useState<string>();
+  const [comment, setComment] = React.useState("");
 
   const { toast } = useToast();
   const { mutate: assignMutate, isPending: isAssignPending } =
@@ -60,6 +61,7 @@ const AssignLabelDialog = ({ open = false, onClose, postId }: Props) => {
   const reset = () => {
     setLabel(undefined);
     setlabelStr("");
+    setComment("");
     setColor(undefined);
   };
 
@@ -77,7 +79,7 @@ const AssignLabelDialog = ({ open = false, onClose, postId }: Props) => {
       { content: labelStr, color: color as string },
       {
         onSuccess: (data) => {
-          assignMutate({ postId, labelId: data.id });
+          assignMutate({ postId, labelId: data.id, comment });
         },
       },
     );
@@ -100,6 +102,11 @@ const AssignLabelDialog = ({ open = false, onClose, postId }: Props) => {
             disabled={!!label}
           />
         </div>
+        <textarea
+          className="input"
+          value={comment}
+          onChange={(e) => setComment(e.target.value)}
+        ></textarea>
         <div className="flex flex-row items-center justify-end gap-4">
           <Button onClick={onClose}>Cancel</Button>
           {!labelStr || label ? (

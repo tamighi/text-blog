@@ -22,6 +22,12 @@ export class UpdateLabelDto {
   @MaxLength(50)
   color?: string;
 
+  @ApiPropertyOptional()
+  @IsOptional()
+  @IsString()
+  @MaxLength(500)
+  definition?: string;
+
   @ApiPropertyOptional({ enum: Lang })
   @IsOptional()
   @IsEnum(Lang)

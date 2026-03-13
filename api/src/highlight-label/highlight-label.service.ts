@@ -18,13 +18,10 @@ export class HighlightLabelService {
     });
   }
 
-  remove(highlightId: number, labelId: number) {
+  remove(id: number) {
     return this.prisma.highlightLabel.delete({
       where: {
-        highlightId_labelId: {
-          highlightId,
-          labelId,
-        },
+        id,
       },
     });
   }

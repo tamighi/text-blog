@@ -75,7 +75,7 @@ const ColorPicker = ({
   React.useEffect(() => {
     setHexInput(value);
     setDisplayColor(value);
-    setHue(hexToHue(value) as number);
+    setHue(hexToHue(value) ?? (0 as number));
   }, [value]);
 
   const handleHueChange = (value: number) => {

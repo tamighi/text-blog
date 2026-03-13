@@ -3,6 +3,7 @@ model Label {
 
   content  String @unique
   color String
+  definition String?
 
   language Lang   @default(EN)
 
@@ -12,4 +13,8 @@ model Label {
   posts      Post[]
   highlights HighlightLabel[]
   postLabels PostLabel[]
+
+  createdAt DateTime @default(now())
+  updatedAt DateTime @updatedAt
+
 }
