@@ -2,7 +2,6 @@ import Autocomplete from "@/components/Autocomplete";
 import Button from "@/components/Button";
 import ColorPicker from "@/components/ColorPicker";
 import Dialog from "@/components/Dialog";
-import useCreateLabel from "@/hooks/query/useCreateLabel";
 import useCreatePostLabel from "@/hooks/query/useCreatePostLabel";
 import useLabels from "@/hooks/query/useLabels";
 import { type Label } from "@shared/types/label";
@@ -17,23 +16,12 @@ type Props = {
 
 const AssignLabelDialog = ({ open = false, onClose, postId }: Props) => {
   const [label, setLabel] = React.useState<Label>();
-  const [labelStr, setlabelStr] = React.useState("");
-  const [color, setColor] = React.useState<string>();
   const [comment, setComment] = React.useState("");
 
   const { toast } = useToast();
-  const { mutate: assignMutate, isPending: isAssignPending } =
-    useCreatePostLabel({
-      onSuccess: () => {
-        toast({ content: "Label assigned." });
-        _onClose();
-      },
-      onError: () => toast({ content: "Error" }),
-    });
-
-  const { mutate: createMutate, isPending: isCreatePending } = useCreateLabel({
+  const { mutate, isPending } = useCreatePostLabel({
     onSuccess: () => {
-      toast({ content: "Label created." });
+      toast({ content: "Label assigned." });
       _onClose();
     },
     onError: () => toast({ content: "Error" }),
@@ -52,17 +40,11 @@ const AssignLabelDialog = ({ open = false, onClose, postId }: Props) => {
   const onAutocompleteChange = (content: string) => {
     const newLabel = labels.find((v) => v.content === content);
     setLabel(newLabel);
-    setlabelStr(content);
-    if (newLabel) {
-      setColor(newLabel.color);
-    }
   };
 
   const reset = () => {
     setLabel(undefined);
-    setlabelStr("");
     setComment("");
-    setColor(undefined);
   };
 
   const _onClose = () => {
@@ -71,18 +53,7 @@ const AssignLabelDialog = ({ open = false, onClose, postId }: Props) => {
   };
 
   const onAssign = () => {
-    assignMutate({ postId, labelId: label!.id, comment });
-  };
-
-  const onCreateAndAssign = () => {
-    createMutate(
-      { content: labelStr, color: color as string },
-      {
-        onSuccess: (data) => {
-          assignMutate({ postId, labelId: data.id, comment });
-        },
-      },
-    );
+    mutate({ postId, labelId: label!.id, comment });
   };
 
   return (
@@ -93,14 +64,9 @@ const AssignLabelDialog = ({ open = false, onClose, postId }: Props) => {
             placeholder="Name"
             options={labelOptions}
             onChange={onAutocompleteChange}
-            value={labelStr}
           />
 
-          <ColorPicker
-            value={label?.color ?? color}
-            onChange={(color) => setColor(color)}
-            disabled={!!label}
-          />
+          <ColorPicker value={label?.color} disabled />
         </div>
         <textarea
           className="input"
@@ -109,18 +75,9 @@ const AssignLabelDialog = ({ open = false, onClose, postId }: Props) => {
         ></textarea>
         <div className="flex flex-row items-center justify-end gap-4">
           <Button onClick={onClose}>Cancel</Button>
-          {!labelStr || label ? (
-            <Button disabled={!label || isAssignPending} onClick={onAssign}>
-              Assign
-            </Button>
-          ) : (
-            <Button
-              disabled={!labelStr || isAssignPending || isCreatePending}
-              onClick={onCreateAndAssign}
-            >
-              Create & assign
-            </Button>
-          )}
+          <Button disabled={!label || isPending} onClick={onAssign}>
+            Assign
+          </Button>
         </div>
       </div>
     </Dialog>
