@@ -23,6 +23,7 @@ const Button = ({
   color = "primary",
   variant = "filed",
   disabled = false,
+  className = "",
   children,
   ...buttonProps
 }: Props) => {
@@ -37,7 +38,7 @@ const Button = ({
           disabled
             ? "opacity-50 cursor-default"
             : "cursor-pointer hover:brightness-110"
-        }`}
+        } ${className}`}
     >
       {children}
     </button>

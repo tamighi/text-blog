@@ -7,6 +7,7 @@ import useLabels from "@/hooks/query/useLabels";
 import { type Label } from "@shared/types/label";
 import React from "react";
 import { useToast } from "../toast/ToastProvider";
+import CreateLabelDialog from "./CreateLabelDialog";
 
 type Props = {
   open?: boolean;
@@ -15,6 +16,7 @@ type Props = {
 };
 
 const AssignLabelDialog = ({ open = false, onClose, postId }: Props) => {
+  const [createOpen, setCreateOpen] = React.useState(false);
   const [label, setLabel] = React.useState<Label>();
   const [comment, setComment] = React.useState("");
 
@@ -73,13 +75,25 @@ const AssignLabelDialog = ({ open = false, onClose, postId }: Props) => {
           value={comment}
           onChange={(e) => setComment(e.target.value)}
         ></textarea>
-        <div className="flex flex-row items-center justify-end gap-4">
-          <Button onClick={onClose}>Cancel</Button>
-          <Button disabled={!label || isPending} onClick={onAssign}>
-            Assign
-          </Button>
+        <div className="flex items-center">
+          <div className="flex-1">
+            <Button onClick={() => setCreateOpen(true)} color="success">
+              New label
+            </Button>
+          </div>
+          <div className="flex gap-4">
+            <Button onClick={onClose}>Cancel</Button>
+            <Button disabled={!label || isPending} onClick={onAssign}>
+              Assign
+            </Button>
+          </div>
         </div>
       </div>
+
+      <CreateLabelDialog
+        open={createOpen}
+        onClose={() => setCreateOpen(false)}
+      />
     </Dialog>
   );
 };
