@@ -7,14 +7,16 @@ type Props = {
 
 const PostItemContent = ({ post, active }: Props) => {
   return (
-    <div className="flex flex-col gap-4 items-start">
+    <div className="flex gap-4 items-start">
       <p
         contentEditable={active}
         dangerouslySetInnerHTML={{ __html: post.content }}
-        className={`mt-2 text-sm text-fg-secondary whitespace-break-spaces ${
-          active ? "" : "max-h-14 overflow-hidden"
-        }`}
+        className={`mt-2 text-md text-fg-secondary w-[36vw]
+          whitespace-break-spaces ${
+            active ? "max-h-[75vh] overflow-scroll" : "max-h-12 overflow-hidden"
+          }`}
       ></p>
+      <div>Highlights</div>
     </div>
   );
 };

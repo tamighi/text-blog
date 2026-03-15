@@ -15,7 +15,7 @@ const PostItem = ({ post }: Props) => {
   };
 
   return (
-    <div className="py-4">
+    <div className="py-4 flex flex-col gap-4">
       <PostItemHeader post={post} active={active} onClick={handleClick} />
       <PostItemContent post={post} active={active} />
     </div>
