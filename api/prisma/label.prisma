@@ -1,11 +1,11 @@
 model Label {
   id Int @id @default(autoincrement())
 
-  content  String @unique
-  color String
+  content    String  @unique
+  color      String
   definition String?
 
-  language Lang   @default(EN)
+  language Lang @default(EN)
 
   conceptId Int?
   concept   Concept? @relation(fields: [conceptId], references: [id], onDelete: SetNull)
@@ -16,5 +16,4 @@ model Label {
 
   createdAt DateTime @default(now())
   updatedAt DateTime @updatedAt
-
 }

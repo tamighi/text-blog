@@ -1,0 +1,10 @@
+model LocalizedText {
+  id       Int    @id @default(autoincrement())
+  content  String
+  language Lang   @default(EN)
+
+  translatedTextId Int
+  translatedText   TranslatedText @relation(fields: [translatedTextId], references: [id])
+
+  @@unique([translatedTextId, language])
+}

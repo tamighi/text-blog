@@ -1,0 +1,7 @@
+model TranslatedText {
+  id             Int             @id @default(autoincrement())
+  localizedTexts LocalizedText[]
+
+  postTitles   Post[] @relation("PostTitle")
+  postContents Post[] @relation("PostContent")
+}

@@ -4,9 +4,9 @@ model PostLabel {
   comment String?
 
   postId  Int
-  post  Post  @relation(fields: [postId], references: [id], onDelete: Cascade)
+  post    Post  @relation(fields: [postId], references: [id], onDelete: Cascade)
   labelId Int
-  label Label @relation(fields: [labelId], references: [id], onDelete: Cascade)
+  label   Label @relation(fields: [labelId], references: [id], onDelete: Cascade)
 
   createdAt DateTime @default(now())
   updatedAt DateTime @updatedAt

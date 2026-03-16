@@ -1,12 +1,13 @@
 model Post {
   id Int @id @default(autoincrement())
 
-  title   String
-  content String
+  titleId   Int
+  title     TranslatedText @relation("PostTitle", fields: [titleId], references: [id])
+
+  contentId Int
+  content   TranslatedText @relation("PostContent", fields: [contentId], references: [id])
 
   published Boolean @default(false)
-
-  language Lang @default(EN)
 
   labels     Label[]
   highlights Highlight[]
