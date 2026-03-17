@@ -1,0 +1,14 @@
+model Label {
+  id Int @id @default(autoincrement())
+
+  content    String  @unique
+  color      String
+
+  definition String?
+
+  createdAt DateTime @default(now())
+  updatedAt DateTime @updatedAt
+
+  highlights HighlightLabel[]
+  posts PostLabel[]
+}

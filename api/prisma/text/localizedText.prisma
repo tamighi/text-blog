@@ -6,5 +6,8 @@ model LocalizedText {
   translatedTextId Int
   translatedText   TranslatedText @relation(fields: [translatedTextId], references: [id])
 
+  createdAt DateTime @default(now())
+  updatedAt DateTime @updatedAt
+
   @@unique([translatedTextId, language])
 }

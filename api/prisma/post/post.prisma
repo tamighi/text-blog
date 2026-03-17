@@ -1,17 +1,14 @@
 model Post {
   id Int @id @default(autoincrement())
 
-  titleId   Int
-  title     TranslatedText @relation("PostTitle", fields: [titleId], references: [id])
+  titleId Int
+  title   TranslatedText @relation("PostTitle", fields: [titleId], references: [id])
 
   contentId Int
   content   TranslatedText @relation("PostContent", fields: [contentId], references: [id])
 
-  published Boolean @default(false)
-
-  labels     Label[]
-  highlights Highlight[]
   postLabels PostLabel[]
+  highlights Highlight[]
 
   createdAt DateTime @default(now())
   updatedAt DateTime @updatedAt

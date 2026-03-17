@@ -16,7 +16,7 @@ export class LabelService {
   findAll(query: LabelQueryDto = {}) {
     const where: LabelWhereInput | undefined = query.excludePostId
       ? {
-          postLabels: { none: { postId: query.excludePostId } },
+          posts: { none: { postId: query.excludePostId } },
         }
       : undefined;
 

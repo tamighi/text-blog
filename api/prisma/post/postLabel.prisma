@@ -5,6 +5,7 @@ model PostLabel {
 
   postId  Int
   post    Post  @relation(fields: [postId], references: [id], onDelete: Cascade)
+
   labelId Int
   label   Label @relation(fields: [labelId], references: [id], onDelete: Cascade)
 

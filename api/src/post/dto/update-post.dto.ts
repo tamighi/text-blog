@@ -1,11 +1,5 @@
 import { ApiPropertyOptional } from "@nestjs/swagger";
-import {
-  IsBoolean,
-  IsEnum,
-  IsOptional,
-  IsString,
-  MaxLength,
-} from "class-validator";
+import { IsEnum, IsOptional, IsString, MaxLength } from "class-validator";
 import { Lang } from "src/generated/prisma/enums";
 
 export class UpdatePostDto {
@@ -19,11 +13,6 @@ export class UpdatePostDto {
   @IsOptional()
   @IsString()
   readonly content?: string;
-
-  @ApiPropertyOptional()
-  @IsOptional()
-  @IsBoolean()
-  readonly published?: boolean;
 
   @ApiPropertyOptional({ enum: Lang })
   @IsOptional()

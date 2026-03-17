@@ -1,5 +1,4 @@
 import { Module } from "@nestjs/common";
-import { ConceptModule } from "./concept/concept.module";
 import { HighlightLabelModule } from "./highlight-label/highlight-label.module";
 import { HighlightModule } from "./highlight/highlight.module";
 import { LabelModule } from "./label/label.module";
@@ -13,7 +12,6 @@ import { PrismaModule } from "./prisma/prisma.module";
     PostModule,
     LabelModule,
     HighlightModule,
-    ConceptModule,
     HighlightLabelModule,
     PostLabelModule,
   ],

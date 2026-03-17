@@ -1,13 +1,5 @@
 import { ApiPropertyOptional } from "@nestjs/swagger";
-import {
-  IsEnum,
-  IsInt,
-  IsOptional,
-  IsString,
-  MaxLength,
-  Min,
-} from "class-validator";
-import { Lang } from "src/generated/prisma/enums";
+import { IsInt, IsOptional, IsString, MaxLength, Min } from "class-validator";
 
 export class UpdateLabelDto {
   @ApiPropertyOptional()
@@ -27,11 +19,6 @@ export class UpdateLabelDto {
   @IsString()
   @MaxLength(500)
   definition?: string;
-
-  @ApiPropertyOptional({ enum: Lang })
-  @IsOptional()
-  @IsEnum(Lang)
-  language?: Lang;
 
   @ApiPropertyOptional()
   @IsOptional()
