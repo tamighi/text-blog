@@ -6,7 +6,11 @@ export interface LocalizedText {
   language: Lang;
 }
 
-export interface translatedText {
+export interface TranslatedText {
   localizedTexts: LocalizedText[]
   id: number
+}
+
+export interface Translated {
+  lang?: Lang;
 }

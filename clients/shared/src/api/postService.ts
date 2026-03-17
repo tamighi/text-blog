@@ -1,30 +1,14 @@
 import { Lang } from "../types/enums";
-import type { CreatePostDto, OptionsPostDto, Post, PostDto, QueryPostDto, UpdatePostDto } from "../types/post";
+import type { CreatePostDto, Post, PostDto, QueryPostDto, UpdatePostDto } from "../types/post";
+import { Translated } from "../types/text";
 import { http } from "./http";
 import { TextService } from "./textService";
 
-interface PostsApiConfig {
-  baseUrl: string;
-}
-
-class PostsApi {
-  private base: string;
-
-  constructor(cfg: PostsApiConfig) {
-    this.base = cfg.baseUrl.replace(/\/$/, "");
-  }
-
-  async list(query: QueryPostDto = {}, options: OptionsPostDto = {}): Promise<Post[]> {
-    const searchParams = new URLSearchParams(
-      Object.entries(query)
-        .filter(([, v]) => v !== undefined && v !== null)
-        .map(([k, v]) => [k, String(v)])
-    );
-
-    const qs = searchParams.toString();
-    const postDtos = await http<PostDto[]>(`${this.base}/post?${qs}`);
-
-    return postDtos.map((dto) => this.postDtoToPost(dto, options.lang))
+class PostsApi extends BaseApi {
+  async list(query: QueryPostDto = {}, options: Translated = {}): Promise<Post[]> {
+    const qs = this.queryToSearchParams(query);
+    const dtos = await http<PostDto[]>(`${this.base}/post?${qs}`);
+    return dtos.map((dto) => this.dtoToInstance(dto, options.lang))
   }
 
   create(dto: CreatePostDto): Promise<Post> {
@@ -51,7 +35,7 @@ class PostsApi {
     });
   }
 
-  private postDtoToPost(dto: PostDto, lang: Lang = "EN"): Post {
+  private dtoToInstance(dto: PostDto, lang: Lang = "EN"): Post {
     return {
       ...dto,
       content: TextService.getLocalizedText(dto.content, lang) ?? "",
@@ -60,6 +44,4 @@ class PostsApi {
   }
 }
 
-export const postService = new PostsApi({
-  baseUrl: "http://localhost:3000",
-});
+export const postService = new PostsApi("http://localhost:3000");

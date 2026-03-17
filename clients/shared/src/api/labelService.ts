@@ -1,26 +1,14 @@
-import type { CreateLabelDto, Label, QueryLabelDto, UpdateLabelDto } from "../types/label";
+import { Lang } from "../types/enums";
+import type { CreateLabelDto, Label, LabelDto, QueryLabelDto, UpdateLabelDto } from "../types/label";
+import { Translated } from "../types/text";
 import { http } from "./http";
+import { TextService } from "./textService";
 
-interface LabelsApiConfig {
-  baseUrl: string;
-}
-
-class LabelsApi {
-  private base: string;
-
-  constructor(cfg: LabelsApiConfig) {
-    this.base = cfg.baseUrl.replace(/\/$/, "");
-  }
-
-  list(query: QueryLabelDto = {}): Promise<Label[]> {
-    const params = new URLSearchParams(
-      Object.entries(query)
-        .filter(([, v]) => v !== undefined && v !== null)
-        .map(([k, v]) => [k, String(v)])
-    );
-
-    const qs = params.toString();
-    return http<Label[]>(`${this.base}/labels?${qs}`);
+class LabelsApi extends BaseApi {
+  async list(query: QueryLabelDto = {}, options: Translated = {}): Promise<Label[]> {
+    const qs = this.queryToSearchParams(query);
+    const dtos = await http<LabelDto[]>(`${this.base}/labels?${qs}`);
+    return dtos.map((dto) => this.dtoToInstance(dto, options.lang))
   }
 
   create(dto: CreateLabelDto): Promise<Label> {
@@ -46,6 +34,14 @@ class LabelsApi {
       method: "DELETE",
     });
   }
+
+  private dtoToInstance(dto: LabelDto, lang: Lang = "EN"): Label {
+    return {
+      ...dto,
+      definition: TextService.getLocalizedText(dto.definition, lang) ?? "",
+      content: TextService.getLocalizedText(dto.content, lang) ?? "",
+    }
+  }
 }
 
-export const labelService = new LabelsApi({ baseUrl: "http://localhost:3000" });
+export const labelService = new LabelsApi("http://localhost:3000");
