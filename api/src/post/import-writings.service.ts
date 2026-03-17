@@ -1,11 +1,11 @@
 import { Injectable } from "@nestjs/common";
 import * as path from "node:path";
 import * as unzipper from "unzipper";
-import { PrismaService } from "src/prisma/prisma.service";
+import { PostService } from "./post.service";
 
 @Injectable()
 export class ImportWrittingsService {
-  constructor(private readonly prisma: PrismaService) {}
+  constructor(private readonly postService: PostService) {}
 
   /**
    * Imports all .md files found in a zip upload.
@@ -37,8 +37,8 @@ export class ImportWrittingsService {
       }),
     );
 
-    const created = await this.prisma.$transaction(
-      items.map((data) => this.prisma.post.create({ data: data as any })),
+    const created = await Promise.all(
+      items.map((data) => this.postService.create(data)),
     );
 
     return {

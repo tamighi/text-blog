@@ -1,5 +1,4 @@
 import { Injectable } from "@nestjs/common";
-import { Lang } from "src/generated/prisma/enums";
 import { PostInclude } from "src/generated/prisma/models";
 import { TranslatedTextService } from "src/text/translated-text.service";
 import { PrismaService } from "../prisma/prisma.service";
@@ -30,27 +29,30 @@ export class PostService {
   }
 
   findAll(query: PostQueryDto = {}) {
-    const include: PostInclude | undefined = query.includeLabels
-      ? {
-          postLabels: {
-            include: {
-              label: true,
+    const include: PostInclude | undefined = {
+      ...(query.includeLabels
+        ? {
+            postLabels: {
+              include: { label: true },
             },
-          },
-        }
-      : undefined;
+          }
+        : {}),
+      title: { include: { localizedTexts: true } },
+      content: { include: { localizedTexts: true } },
+    };
 
-    return this.prisma.post.findMany({
-      include,
-    });
+    return this.prisma.post.findMany({ include });
   }
 
   findOne(id: number) {
     return this.prisma.post.findUnique({
       where: { id },
+      include: {
+        title: { include: { localizedTexts: true } },
+        content: { include: { localizedTexts: true } },
+      },
     });
   }
-
   async update(id: number, dto: UpdatePostDto) {
     const post = await this.prisma.post.findUniqueOrThrow({
       where: { id },
