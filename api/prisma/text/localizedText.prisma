@@ -1,6 +1,6 @@
 model LocalizedText {
   id       Int    @id @default(autoincrement())
-  content  String
+  content  String @unique
   language Lang   @default(EN)
 
   translatedTextId Int

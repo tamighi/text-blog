@@ -4,4 +4,8 @@ model TranslatedText {
 
   postTitles   Post[] @relation("PostTitle")
   postContents Post[] @relation("PostContent")
+  postLabelComment PostLabel[] @relation("PostLabelComment")
+  labelContent Label[] @relation("LabelContent")
+  labelDefinition Label[] @relation("LabelDefinition")
+  highlightComment Highlight[] @relation("HighlightComment")
 }

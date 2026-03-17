@@ -1,15 +1,16 @@
 import { ApiProperty, ApiPropertyOptional } from "@nestjs/swagger";
 import { IsInt, IsOptional, IsString, MaxLength, Min } from "class-validator";
+import { Translated } from "src/text/dto/translated.dto";
 
-export class UpdatePostLabelDto {
+export class UpdatePostLabelDto extends Translated {
   @ApiProperty()
   @IsInt()
   @Min(1)
-  labelId: number;
+  readonly labelId: number;
 
   @ApiPropertyOptional()
   @IsOptional()
   @IsString()
   @MaxLength(500)
-  comment?: string;
+  readonly comment?: string;
 }

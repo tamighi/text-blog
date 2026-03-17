@@ -1,10 +1,13 @@
 model Label {
   id Int @id @default(autoincrement())
 
-  content    String  @unique
+  contentId Int
+  content   TranslatedText @relation("LabelContent", fields: [contentId], references: [id])
+
   color      String
 
-  definition String?
+  definitionId Int
+  definition   TranslatedText @relation("LabelDefinition", fields: [definitionId], references: [id])
 
   createdAt DateTime @default(now())
   updatedAt DateTime @updatedAt

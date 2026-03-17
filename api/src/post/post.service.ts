@@ -13,19 +13,20 @@ export class PostService {
     private readonly translatedTextService: TranslatedTextService,
   ) {}
 
-  async create(data: CreatePostDto) {
-    const { language, title, content, ...dto } = data;
+  async create(dto: CreatePostDto) {
+    const { language, title, content, ...data } = dto;
 
     const { id: titleId } = await this.translatedTextService.create({
       content: title,
       language,
     });
+
     const { id: contentId } = await this.translatedTextService.create({
       content: content,
       language,
     });
 
-    return this.prisma.post.create({ data: { titleId, contentId, ...dto } });
+    return this.prisma.post.create({ data: { titleId, contentId, ...data } });
   }
 
   findAll(query: PostQueryDto = {}) {
@@ -37,8 +38,8 @@ export class PostService {
             },
           }
         : {}),
-      title: { include: { localizedTexts: true } },
-      content: { include: { localizedTexts: true } },
+      title: TranslatedTextService.include,
+      content: TranslatedTextService.include,
     };
 
     return this.prisma.post.findMany({ include });
@@ -48,17 +49,18 @@ export class PostService {
     return this.prisma.post.findUnique({
       where: { id },
       include: {
-        title: { include: { localizedTexts: true } },
-        content: { include: { localizedTexts: true } },
+        title: TranslatedTextService.include,
+        content: TranslatedTextService.include,
       },
     });
   }
+
   async update(id: number, dto: UpdatePostDto) {
+    const { title, content, language, ...data } = dto;
+
     const post = await this.prisma.post.findUniqueOrThrow({
       where: { id },
     });
-
-    const { title, content, language, ...data } = dto;
 
     if (title) {
       await this.translatedTextService.update(post.titleId, {

@@ -1,12 +1,8 @@
-import { IsEnum, IsOptional, IsString, MaxLength } from "class-validator";
-import { Lang } from "src/generated/prisma/enums";
+import { IsString, MaxLength } from "class-validator";
+import { Translated } from "./translated.dto";
 
-export class LocalizedTextDto {
+export class LocalizedTextDto extends Translated {
   @IsString()
   @MaxLength(255)
   content: string;
-
-  @IsOptional()
-  @IsEnum(Lang)
-  language?: Lang;
 }

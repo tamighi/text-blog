@@ -1,7 +1,8 @@
 import { ApiProperty, ApiPropertyOptional } from "@nestjs/swagger";
 import { IsInt, IsOptional, IsString, MaxLength, Min } from "class-validator";
+import { Translated } from "src/text/dto/translated.dto";
 
-export class CreateHighlightDto {
+export class CreateHighlightDto extends Translated {
   @ApiProperty()
   @IsInt()
   @Min(0)

@@ -5,17 +5,21 @@ import { LocalizedTextService } from "./localized-text.service";
 
 @Injectable()
 export class TranslatedTextService {
+  public static readonly include = { include: { localizedTexts: true } };
+
   constructor(
     private prisma: PrismaService,
     private localizedTextService: LocalizedTextService,
   ) {}
 
-  async create(dto: LocalizedTextDto) {
+  async create(dto?: LocalizedTextDto) {
     const translatedText = await this.prisma.translatedText.create({
       data: {},
     });
 
-    await this.localizedTextService.upsert(translatedText.id, dto);
+    if (dto) {
+      await this.update(translatedText.id, dto);
+    }
 
     return translatedText;
   }

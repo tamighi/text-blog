@@ -1,15 +1,8 @@
 import { ApiProperty, ApiPropertyOptional } from "@nestjs/swagger";
-import {
-  IsEnum,
-  IsInt,
-  IsOptional,
-  IsString,
-  MaxLength,
-  Min,
-} from "class-validator";
-import { Lang } from "src/generated/prisma/enums";
+import { IsInt, IsOptional, IsString, MaxLength, Min } from "class-validator";
+import { Translated } from "src/text/dto/translated.dto";
 
-export class CreateLabelDto {
+export class CreateLabelDto extends Translated {
   @ApiProperty()
   @IsString()
   @MaxLength(50)

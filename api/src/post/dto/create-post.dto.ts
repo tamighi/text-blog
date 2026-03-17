@@ -1,8 +1,8 @@
-import { ApiProperty, ApiPropertyOptional } from "@nestjs/swagger";
-import { IsEnum, IsOptional, IsString, MaxLength } from "class-validator";
-import { Lang } from "src/generated/prisma/enums";
+import { ApiProperty } from "@nestjs/swagger";
+import { IsString, MaxLength } from "class-validator";
+import { Translated } from "src/text/dto/translated.dto";
 
-export class CreatePostDto {
+export class CreatePostDto extends Translated {
   @ApiProperty()
   @IsString()
   @MaxLength(255)
@@ -11,9 +11,4 @@ export class CreatePostDto {
   @ApiProperty()
   @IsString()
   readonly content: string;
-
-  @ApiPropertyOptional({ enum: Lang, default: Lang.EN })
-  @IsOptional()
-  @IsEnum(Lang)
-  readonly language?: Lang;
 }
