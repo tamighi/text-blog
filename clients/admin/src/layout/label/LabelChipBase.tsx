@@ -1,30 +1,18 @@
 import Button from "@/components/Button";
 import Dialog from "@/components/Dialog";
 import Popover from "@/components/Popover";
-import useDeleteLabel from "@/hooks/query/useDeleteLabel";
 import type { Label } from "@shared/types/label";
 import React from "react";
-import { useToast } from "../toast/ToastProvider";
 
 type Props = {
   label: Label;
+  onDeleteConfirm: () => void;
+  children?: React.ReactNode;
 };
 
-const LabelItem = ({ label }: Props) => {
-  const { toast } = useToast();
+const LabelChipBase = ({ label, onDeleteConfirm, children }: Props) => {
   const [open, setOpen] = React.useState(false);
   const labelRef = React.useRef<HTMLDivElement>(null);
-
-  const { mutate } = useDeleteLabel({
-    onSuccess: () => {
-      toast({ content: "Label deleted." });
-    },
-    onError: () => toast({ content: "Error" }),
-  });
-
-  const onDelete = () => {
-    mutate(label.id);
-  };
 
   return (
     <>
@@ -46,16 +34,16 @@ const LabelItem = ({ label }: Props) => {
             <span>Confirm deletion?</span>
             <div className="flex justify-end gap-4">
               <Button onClick={() => setOpen(false)}>Cancel</Button>
-              <Button onClick={onDelete} color="success">
+              <Button onClick={onDeleteConfirm} color="success">
                 Confirm
               </Button>
             </div>
           </div>
         </Dialog>
       </div>
-      <Popover anchorRef={labelRef}>{label.content}</Popover>
+      <Popover anchorRef={labelRef}>{children}</Popover>
     </>
   );
 };
 
-export default LabelItem;
+export default LabelChipBase;

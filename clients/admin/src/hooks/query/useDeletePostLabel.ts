@@ -13,8 +13,7 @@ const useDeletePostLabel = ({
   const queryClient = useQueryClient();
 
   return useMutation({
-    mutationFn: ({ labelId, postId }: { labelId: number; postId: number }) =>
-      postLabelService.remove(postId, labelId),
+    mutationFn: (id: number) => postLabelService.remove(id),
     onSuccess: () => {
       queryClient.invalidateQueries({ queryKey: ["posts"] });
       onSuccess?.();

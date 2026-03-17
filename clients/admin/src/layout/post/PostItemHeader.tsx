@@ -2,7 +2,7 @@ import Button from "@/components/Button";
 import type { Post } from "@shared/index";
 import React from "react";
 import AssignLabelDialog from "../label/AssignLabelDialog";
-import PostLabelItem from "../label/PostLabelItem";
+import PostLabelChip from "../label/PostLabelChip";
 
 type Props = {
   post: Post;
@@ -20,7 +20,7 @@ const PostItemHeader = ({ post, onClick, active }: Props) => {
       </h2>
 
       {post.postLabels.map((postLabel) => (
-        <PostLabelItem postLabel={postLabel} key={postLabel.label.id} />
+        <PostLabelChip postLabel={postLabel} key={postLabel.label.id} />
       ))}
 
       {active && <Button onClick={() => setOpen(true)}>+</Button>}

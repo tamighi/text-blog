@@ -1,5 +1,5 @@
 import useLabels from "@/hooks/query/useLabels";
-import LabelItem from "./LabelItem";
+import LabelChip from "./LabelChip";
 
 const LabelDrawing = () => {
   const { data: labels = [], isLoading } = useLabels();
@@ -9,7 +9,7 @@ const LabelDrawing = () => {
       {isLoading && <div>Loading...</div>}
       <div className="flex flex-col gap-4">
         {labels.map((label) => (
-          <LabelItem key={label.id} label={label} />
+          <LabelChip key={label.id} label={label} />
         ))}
       </div>
     </div>
