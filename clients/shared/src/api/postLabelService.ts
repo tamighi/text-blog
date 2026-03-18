@@ -1,15 +1,11 @@
-import { Lang } from "../types/enums";
-import { HighlightDto } from "../types/highlight";
-import type { CreatePostLabelDto, PostLabel, PostLabelDto, UpdatePostLabelDto } from "../types/postLabel";
-import { Translated } from "../types/text";
+import type { CreatePostLabelDto, PostLabel, UpdatePostLabelDto } from "../types/postLabel";
+import { BaseApi } from "./baseApi";
 import { http } from "./http";
-import { TextService } from "./textService";
 
-class PostLabelApi extends BaseApi {
-  async list(query: {} = {}, options: Translated = {}): Promise<PostLabel[]> {
+export class PostLabelApi extends BaseApi {
+  list(query: {} = {}): Promise<PostLabel[]> {
     const qs = this.queryToSearchParams(query);
-    const dtos = await http<PostLabelDto[]>(`${this.base}/post-labels?${qs}`);
-    return dtos.map((dto) => this.dtoToInstance(dto, options.lang))
+    return http<PostLabel[]>(`${this.base}/post-labels?${qs}`);
   }
 
   create(dto: CreatePostLabelDto): Promise<PostLabel> {
@@ -31,13 +27,6 @@ class PostLabelApi extends BaseApi {
       `${this.base}/post-labels/${id}`,
       { method: "DELETE" },
     );
-  }
-
-  private dtoToInstance(dto: PostLabelDto, lang: Lang = "EN"): PostLabel {
-    return {
-      ...dto,
-      comment: TextService.getLocalizedText(dto.comment, lang) ?? "",
-    }
   }
 }
 

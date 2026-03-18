@@ -1,4 +1,4 @@
-class BaseApi {
+export class BaseApi {
   protected base: string;
 
   constructor(baseUrl: string) {

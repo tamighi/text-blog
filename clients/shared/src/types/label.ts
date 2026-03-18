@@ -1,26 +1,20 @@
-import { Translated, TranslatedText } from "./text";
 
-export interface LabelDto {
+export interface Label {
   id: number;
-  content: TranslatedText;
-  definition: TranslatedText;
+  content: string;
+  definition?: string;
   color: string;
   conceptId?: number;
 }
 
-export type Label = Omit<LabelDto, "content" | "definition"> & {
-  content: string;
-  definition: string;
-}
-
-export interface CreateLabelDto extends Translated {
+export interface CreateLabelDto {
   content: string;
   definition: string;
   color: string;
   conceptId?: number;
 }
 
-export interface UpdateLabelDto extends Translated {
+export interface UpdateLabelDto {
   content?: string;
   definition?: string;
   color?: string;

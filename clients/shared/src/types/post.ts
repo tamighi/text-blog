@@ -1,28 +1,22 @@
-import { PostLabel } from "./postLabel";
-import { Translated, TranslatedText } from "./text";
+import { PostLabel, } from "./postLabel";
 
-export interface PostDto {
+export interface Post {
   id: number;
-  title: TranslatedText;
-  content: TranslatedText;
+  title: string;
+  content: string;
   published: boolean;
   createdAt: string;
   updatedAt: string;
   postLabels: PostLabel[];
 }
 
-export type Post = Omit<PostDto, "title" | "content"> & {
-  title: string;
-  content: string;
-}
-
-export interface CreatePostDto extends Translated {
+export interface CreatePostDto {
   title: string;
   content: string;
   published?: boolean;
 }
 
-export interface UpdatePostDto extends Translated {
+export interface UpdatePostDto {
   title?: string;
   content?: string;
   published?: boolean;

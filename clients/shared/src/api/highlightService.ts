@@ -1,14 +1,11 @@
-import { Lang } from "../types/enums";
-import type { CreateHighlightDto, Highlight, HighlightDto, UpdateHighlightDto } from "../types/highlight";
-import { Translated } from "../types/text";
+import type { CreateHighlightDto, Highlight, UpdateHighlightDto } from "../types/highlight";
+import { BaseApi } from "./baseApi";
 import { http } from "./http";
-import { TextService } from "./textService";
 
 class HighlightApi extends BaseApi {
-  async list(query: {} = {}, options: Translated = {}): Promise<Highlight[]> {
+  list(query: {} = {}): Promise<Highlight[]> {
     const qs = this.queryToSearchParams(query);
-    const dtos = await http<HighlightDto[]>(`${this.base}/highlights?${qs}`);
-    return dtos.map((dto) => this.dtoToInstance(dto, options.lang))
+    return http<Highlight[]>(`${this.base}/highlights?${qs}`);
   }
 
   create(dto: CreateHighlightDto): Promise<Highlight> {
@@ -33,13 +30,6 @@ class HighlightApi extends BaseApi {
     return http<{ id: number }>(`${this.base}/highlights/${id}`, {
       method: "DELETE",
     });
-  }
-
-  private dtoToInstance(dto: HighlightDto, lang: Lang = "EN"): Highlight {
-    return {
-      ...dto,
-      comment: TextService.getLocalizedText(dto.comment, lang) ?? "",
-    }
   }
 }
 

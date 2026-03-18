@@ -4,8 +4,7 @@ model Highlight {
   start  Int
   length Int
 
-  commentId Int
-  comment   TranslatedText @relation("HighlightComment", fields: [commentId], references: [id])
+  comment   String?
 
   postId Int
   post   Post @relation(fields: [postId], references: [id], onDelete: Cascade)

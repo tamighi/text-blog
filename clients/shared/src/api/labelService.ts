@@ -1,14 +1,11 @@
-import { Lang } from "../types/enums";
-import type { CreateLabelDto, Label, LabelDto, QueryLabelDto, UpdateLabelDto } from "../types/label";
-import { Translated } from "../types/text";
+import type { CreateLabelDto, Label, QueryLabelDto, UpdateLabelDto } from "../types/label";
+import { BaseApi } from "./baseApi";
 import { http } from "./http";
-import { TextService } from "./textService";
 
-class LabelsApi extends BaseApi {
-  async list(query: QueryLabelDto = {}, options: Translated = {}): Promise<Label[]> {
+export class LabelsApi extends BaseApi {
+  list(query: QueryLabelDto = {}): Promise<Label[]> {
     const qs = this.queryToSearchParams(query);
-    const dtos = await http<LabelDto[]>(`${this.base}/labels?${qs}`);
-    return dtos.map((dto) => this.dtoToInstance(dto, options.lang))
+    return http<Label[]>(`${this.base}/labels?${qs}`);
   }
 
   create(dto: CreateLabelDto): Promise<Label> {
@@ -33,14 +30,6 @@ class LabelsApi extends BaseApi {
     return http<{ id: number }>(`${this.base}/labels/${id}`, {
       method: "DELETE",
     });
-  }
-
-  private dtoToInstance(dto: LabelDto, lang: Lang = "EN"): Label {
-    return {
-      ...dto,
-      definition: TextService.getLocalizedText(dto.definition, lang) ?? "",
-      content: TextService.getLocalizedText(dto.content, lang) ?? "",
-    }
   }
 }
 

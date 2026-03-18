@@ -1,25 +1,19 @@
-import { Translated, TranslatedText } from "./text";
-
-export interface HighlightDto {
+export interface Highlight {
   id: number;
   start: number;
   length: number;
-  comment: TranslatedText;
+  comment?: string;
   postId: number;
 }
 
-export type Highlight = Omit<HighlightDto, "comment"> & {
-  comment?: string;
-}
-
-export interface CreateHighlightDto extends Translated {
+export interface CreateHighlightDto {
   start: number;
   length: number;
   comment?: string;
   postId: number;
 }
 
-export interface UpdateHighlightDto extends Translated {
+export interface UpdateHighlightDto {
   start?: number;
   length?: number;
   comment?: string;

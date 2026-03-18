@@ -1,11 +1,9 @@
 model Post {
   id Int @id @default(autoincrement())
 
-  titleId Int
-  title   TranslatedText @relation("PostTitle", fields: [titleId], references: [id])
+  title   String
 
-  contentId Int
-  content   TranslatedText @relation("PostContent", fields: [contentId], references: [id])
+  content   String
 
   postLabels PostLabel[]
   highlights Highlight[]

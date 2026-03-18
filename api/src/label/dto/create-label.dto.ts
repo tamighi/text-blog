@@ -1,8 +1,7 @@
 import { ApiProperty, ApiPropertyOptional } from "@nestjs/swagger";
 import { IsInt, IsOptional, IsString, MaxLength, Min } from "class-validator";
-import { Translated } from "src/text/dto/translated.dto";
 
-export class CreateLabelDto extends Translated {
+export class CreateLabelDto {
   @ApiProperty()
   @IsString()
   @MaxLength(50)

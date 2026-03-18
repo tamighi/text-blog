@@ -4,32 +4,13 @@ import { CreateLabelDto } from "./dto/create-label.dto";
 import { UpdateLabelDto } from "./dto/update-label.dto";
 import { LabelQueryDto } from "./dto/label-query.dto";
 import { LabelWhereInput } from "src/generated/prisma/models";
-import { TranslatedTextService } from "src/text/translated-text.service";
 
 @Injectable()
 export class LabelService {
-  constructor(
-    private readonly prisma: PrismaService,
-    private readonly translatedTextService: TranslatedTextService,
-  ) {}
+  constructor(private readonly prisma: PrismaService) {}
 
-  async create(dto: CreateLabelDto) {
-    const { language, definition, content, ...data } = dto;
-
-    const { id: contentId } = await this.translatedTextService.create({
-      content: content,
-      language,
-    });
-
-    const definitionDto = definition
-      ? { content: definition, language }
-      : undefined;
-    const { id: definitionId } =
-      await this.translatedTextService.create(definitionDto);
-
-    return this.prisma.label.create({
-      data: { contentId, definitionId, ...data },
-    });
+  create(dto: CreateLabelDto) {
+    return this.prisma.label.create({ data: dto });
   }
 
   findAll(query: LabelQueryDto = {}) {
@@ -46,30 +27,10 @@ export class LabelService {
     return this.prisma.label.findUnique({ where: { id } });
   }
 
-  async update(id: number, dto: UpdateLabelDto) {
-    const { definition, content, language, ...data } = dto;
-
-    const label = await this.prisma.label.findUniqueOrThrow({
-      where: { id },
-    });
-
-    if (definition) {
-      await this.translatedTextService.update(label.definitionId, {
-        language,
-        content: definition,
-      });
-    }
-
-    if (content) {
-      await this.translatedTextService.update(label.contentId, {
-        language,
-        content: content,
-      });
-    }
-
+  update(id: number, dto: UpdateLabelDto) {
     return this.prisma.label.update({
       where: { id },
-      data,
+      data: dto,
     });
   }
 
