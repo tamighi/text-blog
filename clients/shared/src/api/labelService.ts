@@ -1,11 +1,10 @@
-import type { CreateLabelDto, Label, QueryLabelDto, UpdateLabelDto } from "../types/label";
+import type { CreateLabelDto, Label, UpdateLabelDto } from "../types/label";
 import { BaseApi } from "./baseApi";
 import { http } from "./http";
 
 export class LabelsApi extends BaseApi {
-  list(query: QueryLabelDto = {}): Promise<Label[]> {
-    const qs = this.queryToSearchParams(query);
-    return http<Label[]>(`${this.base}/labels?${qs}`);
+  list(): Promise<Label[]> {
+    return http<Label[]>(`${this.base}/labels?`);
   }
 
   create(dto: CreateLabelDto): Promise<Label> {

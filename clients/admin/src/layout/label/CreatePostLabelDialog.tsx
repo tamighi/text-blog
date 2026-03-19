@@ -4,6 +4,7 @@ import ColorPicker from "@/components/ColorPicker";
 import Dialog from "@/components/Dialog";
 import useCreatePostLabel from "@/hooks/query/useCreatePostLabel";
 import useLabels from "@/hooks/query/useLabels";
+import type { Post } from "@shared/index";
 import { type Label } from "@shared/types/label";
 import React from "react";
 import { useToast } from "../toast/ToastProvider";
@@ -12,10 +13,10 @@ import CreateLabelDialog from "./CreateLabelDialog";
 type Props = {
   open?: boolean;
   onClose?: () => void;
-  postId: number;
+  post: Post;
 };
 
-const AssignLabelDialog = ({ open = false, onClose, postId }: Props) => {
+const CreatePostLabelDialog = ({ open = false, onClose, post }: Props) => {
   const [createOpen, setCreateOpen] = React.useState(false);
   const [label, setLabel] = React.useState<Label>();
   const [comment, setComment] = React.useState("");
@@ -29,13 +30,13 @@ const AssignLabelDialog = ({ open = false, onClose, postId }: Props) => {
     onError: () => toast({ content: "Error" }),
   });
 
-  const { data: labels = [] } = useLabels({
-    enabled: open,
-    queryParams: { excludePostId: postId },
-  });
+  const { data: labels = [] } = useLabels({ enabled: open });
 
   const labelOptions = React.useMemo(
-    () => labels.map((l) => l.content),
+    () =>
+      labels
+        .filter((l) => !post.postLabels.some((pl) => pl.id === l.id))
+        .map((l) => l.content),
     [labels],
   );
 
@@ -55,7 +56,7 @@ const AssignLabelDialog = ({ open = false, onClose, postId }: Props) => {
   };
 
   const onAssign = () => {
-    mutate({ postId, labelId: label!.id, comment });
+    mutate({ postId: post.id, labelId: label!.id, comment });
   };
 
   return (
@@ -98,4 +99,4 @@ const AssignLabelDialog = ({ open = false, onClose, postId }: Props) => {
   );
 };
 
-export default AssignLabelDialog;
+export default CreatePostLabelDialog;

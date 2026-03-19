@@ -1,7 +1,7 @@
 import Button from "@/components/Button";
 import type { Post } from "@shared/index";
 import React from "react";
-import AssignLabelDialog from "../label/AssignLabelDialog";
+import CreatePostLabelDialog from "../label/CreatePostLabelDialog";
 import PostLabelChip from "../label/PostLabelChip";
 
 type Props = {
@@ -25,8 +25,8 @@ const PostItemHeader = ({ post, onClick, active }: Props) => {
 
       {active && <Button onClick={() => setOpen(true)}>+</Button>}
 
-      <AssignLabelDialog
-        postId={post.id}
+      <CreatePostLabelDialog
+        post={post}
         open={open}
         onClose={() => setOpen(false)}
       />

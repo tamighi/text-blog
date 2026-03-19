@@ -1,16 +1,14 @@
 import { labelService } from "@shared/api/labelService";
-import type { QueryLabelDto } from "@shared/types/label";
 import { useQuery } from "@tanstack/react-query";
 
 type QueryOptionProps = {
   enabled?: boolean;
-  queryParams?: QueryLabelDto;
 };
 
-const useLabels = ({ enabled, queryParams }: QueryOptionProps = {}) => {
+const useLabels = ({ enabled }: QueryOptionProps = {}) => {
   const query = useQuery({
-    queryKey: ["labels", queryParams],
-    queryFn: () => labelService.list(queryParams),
+    queryKey: ["labels"],
+    queryFn: () => labelService.list(),
     enabled,
   });
   return query;
