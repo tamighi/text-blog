@@ -9,7 +9,7 @@ model Highlight {
   postId Int
   post   Post @relation(fields: [postId], references: [id], onDelete: Cascade)
 
-  labels HighlightLabel[]
+  labels Label[]
 
   createdAt DateTime @default(now())
   updatedAt DateTime @updatedAt

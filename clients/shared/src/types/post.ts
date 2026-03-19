@@ -1,4 +1,5 @@
-import { PostLabel, } from "./postLabel";
+import { PostLabel } from "./postLabel";
+import { Highlight } from "./highlight";
 
 export interface Post {
   id: number;
@@ -8,6 +9,7 @@ export interface Post {
   createdAt: string;
   updatedAt: string;
   postLabels: PostLabel[];
+  highlight: Highlight[];
 }
 
 export interface CreatePostDto {

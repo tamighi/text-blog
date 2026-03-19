@@ -14,14 +14,9 @@ export class PostService {
   }
 
   findAll(query: PostQueryDto = {}) {
-    const include: PostInclude | undefined = {
-      ...(query.includeLabels
-        ? {
-            postLabels: {
-              include: { label: true },
-            },
-          }
-        : {}),
+    const include: PostInclude = {
+      postLabels: query.includeLabels ? { include: { label: true } } : false,
+      highlights: { include: { labels: true } },
     };
 
     return this.prisma.post.findMany({ include });
