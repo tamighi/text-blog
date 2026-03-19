@@ -7,11 +7,6 @@ export class CreateLabelDto {
   @MaxLength(50)
   content: string;
 
-  @ApiProperty()
-  @IsString()
-  @MaxLength(10)
-  color: string;
-
   @ApiPropertyOptional()
   @IsOptional()
   @IsString()

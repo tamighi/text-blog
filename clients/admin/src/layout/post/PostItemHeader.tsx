@@ -1,8 +1,8 @@
 import Button from "@/components/Button";
 import type { Post } from "@shared/index";
 import React from "react";
-import CreatePostLabelDialog from "../label/CreatePostLabelDialog";
-import PostLabelChip from "../label/PostLabelChip";
+import CreatePostLabelDialog from "../postLabel/CreatePostLabelDialog";
+import PostLabelChip from "../postLabel/PostLabelChip";
 
 type Props = {
   post: Post;

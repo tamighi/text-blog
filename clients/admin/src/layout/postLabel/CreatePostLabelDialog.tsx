@@ -1,6 +1,5 @@
 import Autocomplete from "@/components/Autocomplete";
 import Button from "@/components/Button";
-import ColorPicker from "@/components/ColorPicker";
 import Dialog from "@/components/Dialog";
 import useCreatePostLabel from "@/hooks/query/useCreatePostLabel";
 import useLabels from "@/hooks/query/useLabels";
@@ -8,7 +7,7 @@ import type { Post } from "@shared/index";
 import { type Label } from "@shared/types/label";
 import React from "react";
 import { useToast } from "../toast/ToastProvider";
-import CreateLabelDialog from "./CreateLabelDialog";
+import CreateLabelDialog from "../label/CreateLabelDialog";
 
 type Props = {
   open?: boolean;
@@ -55,27 +54,26 @@ const CreatePostLabelDialog = ({ open = false, onClose, post }: Props) => {
     onClose?.();
   };
 
-  const onAssign = () => {
+  const onCreatePostLabel = () => {
     mutate({ postId: post.id, labelId: label!.id, comment });
   };
 
   return (
     <Dialog open={open} onClose={_onClose} title={"Assign label"}>
       <div className="flex flex-col gap-8">
-        <div className="flex flex-row items-start gap-4">
+        <div className="flex flex-row gap-4">
           <Autocomplete
             placeholder="Name"
             options={labelOptions}
             onChange={onAutocompleteChange}
           />
-
-          <ColorPicker value={label?.color} disabled />
+          <textarea
+            className="input"
+            placeholder="Comment"
+            value={comment}
+            onChange={(e) => setComment(e.target.value)}
+          ></textarea>
         </div>
-        <textarea
-          className="input"
-          value={comment}
-          onChange={(e) => setComment(e.target.value)}
-        ></textarea>
         <div className="flex items-center">
           <div className="flex-1">
             <Button onClick={() => setCreateOpen(true)} color="success">
@@ -84,7 +82,7 @@ const CreatePostLabelDialog = ({ open = false, onClose, post }: Props) => {
           </div>
           <div className="flex gap-4">
             <Button onClick={onClose}>Cancel</Button>
-            <Button disabled={!label || isPending} onClick={onAssign}>
+            <Button disabled={!label || isPending} onClick={onCreatePostLabel}>
               Assign
             </Button>
           </div>

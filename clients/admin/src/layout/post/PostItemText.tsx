@@ -8,16 +8,14 @@ import React from "react";
 type Props = {
   post: Post;
   active: boolean;
+  onSelect?: (e: TextSelectionEvent) => void;
+  onClear?: () => void;
 };
 
-const PostItemText = ({ post, active }: Props) => {
+const PostItemText = ({ post, active, onSelect, onClear }: Props) => {
   const ref = React.useRef<HTMLParagraphElement>(null);
 
-  const onSelect = (e: TextSelectionEvent) => {
-    console.log(e);
-  };
-
-  useTextSelection(ref, { enabled: active, onSelect });
+  useTextSelection(ref, { enabled: active, onSelect, onClear });
 
   return (
     <p

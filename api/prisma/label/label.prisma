@@ -2,7 +2,6 @@ model Label {
   id Int @id @default(autoincrement())
 
   content   String
-  color      String
   definition   String?
 
   createdAt DateTime @default(now())

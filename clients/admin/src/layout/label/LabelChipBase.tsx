@@ -18,8 +18,7 @@ const LabelChipBase = ({ label, onDeleteConfirm, children }: Props) => {
     <>
       <div
         ref={labelRef}
-        className="px-2 py-1 rounded-full relative"
-        style={{ backgroundColor: label.color }}
+        className="px-2 py-1 rounded-full relative bg-elevation-1"
       >
         <button
           onClick={() => setOpen(true)}
@@ -28,7 +27,7 @@ const LabelChipBase = ({ label, onDeleteConfirm, children }: Props) => {
         >
           ×
         </button>
-        <span className="text-black">{label.content}</span>
+        <span className="text-secondary">{label.content}</span>
         <Dialog title="Delete label" open={open} onClose={() => setOpen(false)}>
           <div className="flex flex-col gap-4">
             <span>Confirm deletion?</span>

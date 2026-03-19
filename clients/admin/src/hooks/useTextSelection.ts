@@ -4,7 +4,7 @@ export type TextSelectionEvent = { text: string; range: Range };
 
 type UseTextSelectionOptions = {
   enabled?: boolean;
-  onSelect: (e: TextSelectionEvent) => void;
+  onSelect?: (e: TextSelectionEvent) => void;
   onClear?: () => void;
 };
 
@@ -29,7 +29,7 @@ export const useTextSelection = (
         return;
       }
 
-      onSelect({
+      onSelect?.({
         text: sel.toString(),
         range: sel.getRangeAt(0),
       });

@@ -1,5 +1,4 @@
 import Button from "@/components/Button";
-import ColorPicker from "@/components/ColorPicker";
 import Dialog from "@/components/Dialog";
 import useCreateLabel from "@/hooks/query/useCreateLabel";
 import { type CreateLabelDto, type Label } from "@shared/types/label";
@@ -12,10 +11,7 @@ type Props = {
 };
 
 const CreateLabelDialog = ({ open = false, onClose }: Props) => {
-  const [label, setLabel] = React.useState<CreateLabelDto>({
-    content: "",
-    color: "",
-  });
+  const [label, setLabel] = React.useState<CreateLabelDto>({ content: "" });
 
   const { toast } = useToast();
   const { mutate, isPending } = useCreateLabel({
@@ -31,7 +27,7 @@ const CreateLabelDialog = ({ open = false, onClose }: Props) => {
   };
 
   const reset = () => {
-    setLabel({ content: "", color: "" });
+    setLabel({ content: "" });
   };
 
   const _onClose = () => {
@@ -43,7 +39,7 @@ const CreateLabelDialog = ({ open = false, onClose }: Props) => {
     mutate(label as CreateLabelDto);
   };
 
-  const valid = React.useMemo(() => !!label.color && !!label.content, [label]);
+  const valid = React.useMemo(() => !!label.content, [label]);
 
   return (
     <Dialog open={open} onClose={_onClose} title={"New label"}>
@@ -54,10 +50,6 @@ const CreateLabelDialog = ({ open = false, onClose }: Props) => {
             className="input"
             value={label.content}
             onChange={(e) => onLabelChange({ content: e.target.value })}
-          />
-          <ColorPicker
-            value={label.color}
-            onChange={(color) => onLabelChange({ color })}
           />
         </div>
         <div className="flex flex-row items-center justify-end gap-4">

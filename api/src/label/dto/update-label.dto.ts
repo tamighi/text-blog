@@ -11,12 +11,6 @@ export class UpdateLabelDto {
   @ApiPropertyOptional()
   @IsOptional()
   @IsString()
-  @MaxLength(50)
-  color?: string;
-
-  @ApiPropertyOptional()
-  @IsOptional()
-  @IsString()
   @MaxLength(500)
   definition?: string;
 

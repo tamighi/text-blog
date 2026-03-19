@@ -1,5 +1,13 @@
 import { ApiPropertyOptional } from "@nestjs/swagger";
-import { IsInt, IsOptional, IsString, MaxLength, Min } from "class-validator";
+import {
+  IsInt,
+  IsOptional,
+  IsString,
+  MaxLength,
+  Min,
+  IsArray,
+} from "class-validator";
+import { Type } from "class-transformer";
 
 export class UpdateHighlightDto {
   @ApiPropertyOptional()
@@ -19,4 +27,12 @@ export class UpdateHighlightDto {
   @IsString()
   @MaxLength(500)
   comment?: string;
+
+  @ApiPropertyOptional({ type: [Number] })
+  @IsOptional()
+  @IsArray()
+  @IsInt({ each: true })
+  @Min(1, { each: true })
+  @Type(() => Number)
+  labelIds?: number[];
 }

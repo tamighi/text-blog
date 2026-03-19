@@ -9,7 +9,7 @@ export interface Post {
   createdAt: string;
   updatedAt: string;
   postLabels: PostLabel[];
-  highlight: Highlight[];
+  highlights: Highlight[];
 }
 
 export interface CreatePostDto {
