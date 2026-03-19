@@ -1,5 +1,6 @@
 import Button from "@/components/Button";
 import type { Post } from "@shared/index";
+import PostItemText from "./PostItemText";
 
 type Props = {
   post: Post;
@@ -10,16 +11,7 @@ const PostItemContent = ({ post, active }: Props) => {
   return (
     <div className="flex gap-4 items-start">
       <div className="flex flex-col gap-8">
-        <p
-          contentEditable={active}
-          dangerouslySetInnerHTML={{ __html: post.content }}
-          className={`mt-2 text-md text-fg-secondary w-[36vw]
-            whitespace-break-spaces ${
-              active
-                ? "max-h-[75vh] overflow-scroll"
-                : "max-h-12 overflow-hidden"
-            }`}
-        ></p>
+        <PostItemText post={post} active={active} />
         {active && <Button className="self-start">Save</Button>}
       </div>
       <div>Highlights</div>
