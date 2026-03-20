@@ -23,7 +23,3 @@ export interface UpdatePostDto {
   content?: string;
   published?: boolean;
 }
-
-export interface QueryPostDto {
-  includeLabels?: boolean;
-}

@@ -3,9 +3,8 @@ import { BaseApi } from "./baseApi";
 import { http } from "./http";
 
 class HighlightApi extends BaseApi {
-  list(query: {} = {}): Promise<Highlight[]> {
-    const qs = this.queryToSearchParams(query);
-    return http<Highlight[]>(`${this.base}/highlights?${qs}`);
+  list(): Promise<Highlight[]> {
+    return http<Highlight[]>(`${this.base}/highlights`);
   }
 
   create(dto: CreateHighlightDto): Promise<Highlight> {

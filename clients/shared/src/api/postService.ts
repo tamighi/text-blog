@@ -1,11 +1,10 @@
-import type { CreatePostDto, Post, QueryPostDto, UpdatePostDto } from "../types/post";
+import type { CreatePostDto, Post, UpdatePostDto } from "../types/post";
 import { BaseApi } from "./baseApi";
 import { http } from "./http";
 
 class PostsApi extends BaseApi {
-  list(query: QueryPostDto = {}): Promise<Post[]> {
-    const qs = this.queryToSearchParams(query);
-    return http<Post[]>(`${this.base}/post?${qs}`);
+  list(): Promise<Post[]> {
+    return http<Post[]>(`${this.base}/post`);
   }
 
   create(dto: CreatePostDto): Promise<Post> {

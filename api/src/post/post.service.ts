@@ -2,7 +2,6 @@ import { Injectable } from "@nestjs/common";
 import { PostInclude } from "src/generated/prisma/models";
 import { PrismaService } from "../prisma/prisma.service";
 import { CreatePostDto } from "./dto/create-post.dto";
-import { PostQueryDto } from "./dto/post-query.dto";
 import { UpdatePostDto } from "./dto/update-post.dto";
 
 @Injectable()
@@ -13,9 +12,9 @@ export class PostService {
     return this.prisma.post.create({ data: dto });
   }
 
-  findAll(query: PostQueryDto = {}) {
+  findAll() {
     const include: PostInclude = {
-      postLabels: query.includeLabels ? { include: { label: true } } : false,
+      postLabels: { include: { label: true } },
       highlights: { include: { labels: true } },
     };
 

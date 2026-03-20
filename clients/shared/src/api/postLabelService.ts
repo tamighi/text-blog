@@ -3,9 +3,8 @@ import { BaseApi } from "./baseApi";
 import { http } from "./http";
 
 export class PostLabelApi extends BaseApi {
-  list(query: {} = {}): Promise<PostLabel[]> {
-    const qs = this.queryToSearchParams(query);
-    return http<PostLabel[]>(`${this.base}/post-labels?${qs}`);
+  list(): Promise<PostLabel[]> {
+    return http<PostLabel[]>(`${this.base}/post-labels`);
   }
 
   create(dto: CreatePostLabelDto): Promise<PostLabel> {

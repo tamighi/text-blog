@@ -4,7 +4,7 @@ import { useQuery } from "@tanstack/react-query";
 const usePosts = () => {
   const query = useQuery({
     queryKey: ["posts"],
-    queryFn: () => postService.list({ includeLabels: true }),
+    queryFn: () => postService.list(),
   });
   return query;
 };
