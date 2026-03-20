@@ -1,11 +1,12 @@
-import Button from "@/components/Button";
-import { useOpenSidebar } from "./OpenSidebarProvider";
+import { Link } from "@tanstack/react-router";
 
 const Appbar = () => {
-  const { toggle } = useOpenSidebar();
   return (
     <div className="w-full h-appbar bg-elevation-1">
-      <Button onClick={() => toggle()}>Hello</Button>
+      <div className="flex gap-4">
+        <Link to="/post">Posts</Link>
+        <Link to="/label">Labels</Link>
+      </div>
     </div>
   );
 };
