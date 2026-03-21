@@ -6,7 +6,7 @@ export interface Highlight {
   length: number;
   comment?: string;
   postId: number;
-  label: Label[];
+  labels: Label[];
 }
 
 export interface CreateHighlightDto {

@@ -1,5 +1,5 @@
 import Button from "@/components/Button";
-import type { Post } from "@shared/index";
+import type { Post } from "@shared/types/post";
 import React from "react";
 import CreatePostLabelDialog from "../postLabel/CreatePostLabelDialog";
 import PostLabelChip from "../postLabel/PostLabelChip";

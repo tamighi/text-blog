@@ -1,4 +1,3 @@
-
 export interface Label {
   id: number;
   content: string;

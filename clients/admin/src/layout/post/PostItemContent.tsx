@@ -3,10 +3,10 @@ import type { TextSelectionEvent } from "@/hooks/useTextSelection";
 import type { Post } from "@shared/index";
 import React from "react";
 import PostItemText from "./PostItemText";
-import CreateHighlightDialog from "../highlight/CreateHighlightDialog";
 import { useToast } from "../toast/ToastProvider";
 import useCreateHighlight from "@/hooks/query/useCreateHighlight";
 import type { Label } from "@shared/types/label";
+import PostItemHighlights from "./PostItemHighlights";
 
 type Props = {
   post: Post;
@@ -14,29 +14,28 @@ type Props = {
 };
 
 const PostItemContent = ({ post, active }: Props) => {
-  const [selection, setSelection] = React.useState<Range>(new Range());
-  const [open, setOpen] = React.useState(false);
+  const selectionRef = React.useRef<TextSelectionEvent>(null);
 
   const { toast } = useToast();
   const { mutate } = useCreateHighlight({
     onSuccess: () => {
       toast({ content: "Highlight created" });
-      setOpen(false);
     },
     onError: () => toast({ content: "Error" }),
   });
 
   const onSelect = (selection: TextSelectionEvent) => {
-    setSelection(selection.range); // TODO: ref
-    setOpen(true);
+    selectionRef.current = selection;
   };
 
   const onCreate = (label: Label) => {
+    const range = selectionRef.current!.range;
+
     mutate({
       postId: post.id,
       labelIds: [label.id],
-      start: selection.startOffset,
-      length: selection.endOffset - selection.startOffset,
+      start: range.startOffset,
+      length: range.endOffset - range.startOffset,
     });
   };
 
@@ -46,13 +45,7 @@ const PostItemContent = ({ post, active }: Props) => {
         <PostItemText onSelect={onSelect} post={post} active={active} />
         {active && <Button className="self-start">Save</Button>}
       </div>
-      <div>Highlights</div>
-      <CreateHighlightDialog
-        post={post}
-        open={open}
-        onClose={() => setOpen(false)}
-        onCreate={onCreate}
-      />
+      <PostItemHighlights post={post} active={active} />
     </div>
   );
 };

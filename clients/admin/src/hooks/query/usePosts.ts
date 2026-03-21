@@ -1,4 +1,4 @@
-import { postService } from "@shared/index";
+import { postService } from "@shared/api/postService";
 import { useQuery } from "@tanstack/react-query";
 
 const usePosts = () => {
