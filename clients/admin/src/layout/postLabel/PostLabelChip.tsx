@@ -1,7 +1,7 @@
 import useDeletePostLabel from "@/hooks/query/useDeletePostLabel";
 import type { PostLabel } from "@shared/types/postLabel";
 import { useToast } from "../toast/ToastProvider";
-import LabelChipBase from "../label/LabelChipBase";
+import LabelChip from "../label/LabelChip";
 
 type Props = {
   postLabel: PostLabel;
@@ -22,9 +22,11 @@ const PostLabelChip = ({ postLabel }: Props) => {
   };
 
   return (
-    <LabelChipBase label={postLabel.label} onDeleteConfirm={onDelete}>
-      {postLabel.comment}
-    </LabelChipBase>
+    <LabelChip
+      label={postLabel.label}
+      popoverNode={postLabel.comment}
+      onDelete={onDelete}
+    />
   );
 };
 

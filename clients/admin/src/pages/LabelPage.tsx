@@ -1,6 +1,6 @@
 import Button from "@/components/Button";
 import CreateLabelDialog from "@/layout/label/CreateLabelDialog";
-import LabelDrawing from "@/layout/label/LabelDrawing";
+import LabelList from "@/layout/label/LabelList";
 import React from "react";
 
 const LabelPage = () => {
@@ -8,7 +8,7 @@ const LabelPage = () => {
 
   return (
     <div>
-      <LabelDrawing />
+      <LabelList />
       <CreateLabelDialog open={open} onClose={() => setOpen(false)} />
       <Button onClick={() => setOpen(true)}>New label</Button>
     </div>
