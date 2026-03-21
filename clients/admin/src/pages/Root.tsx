@@ -3,7 +3,7 @@ import { Outlet } from "@tanstack/react-router";
 
 const Root = () => {
   return (
-    <div className="flex flex-col bg-elevation-0">
+    <div className="flex flex-col min-h-screen bg-elevation-0">
       <Appbar />
 
       <Outlet />

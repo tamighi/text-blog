@@ -9,11 +9,7 @@ const LabelPage = () => {
   return (
     <div>
       <LabelDrawing />
-      <CreateLabelDialog
-        operation="create"
-        open={open}
-        onClose={() => setOpen(false)}
-      />
+      <CreateLabelDialog open={open} onClose={() => setOpen(false)} />
       <Button onClick={() => setOpen(true)}>New label</Button>
     </div>
   );

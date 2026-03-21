@@ -18,7 +18,7 @@ const PostItemContent = ({ post, active }: Props) => {
   const [open, setOpen] = React.useState(false);
 
   const { toast } = useToast();
-  const { mutate, isPending } = useCreateHighlight({
+  const { mutate } = useCreateHighlight({
     onSuccess: () => {
       toast({ content: "Highlight created" });
       setOpen(false);

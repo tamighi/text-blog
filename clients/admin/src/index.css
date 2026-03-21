@@ -15,8 +15,6 @@
 
   --spacing-input: 24px;
   --spacing-rootWidth: 280px;
-  --spacing-appbar: 48px;
-  --spacing-appbar-fill: calc(100vh - var(--spacing-appbar));
 }
 
 body {
