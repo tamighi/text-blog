@@ -33,7 +33,7 @@ h2 {
   /**/
   text-fg-primary
   /**/
-  placeholder:text-fg-secondary
+  placeholder:text-fg-secondary/50
   /**/
   border border-elevation-3
   /**/

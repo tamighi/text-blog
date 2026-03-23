@@ -1,5 +1,5 @@
-import { PostLabel } from "./postLabel";
 import { Highlight } from "./highlight";
+import { Label } from "./label";
 
 export interface Post {
   id: number;
@@ -8,7 +8,7 @@ export interface Post {
   published: boolean;
   createdAt: string;
   updatedAt: string;
-  postLabels: PostLabel[];
+  labels: Label[];
   highlights: Highlight[];
 }
 
@@ -16,10 +16,12 @@ export interface CreatePostDto {
   title: string;
   content: string;
   published?: boolean;
+  labelIds?: number[];
 }
 
 export interface UpdatePostDto {
   title?: string;
   content?: string;
   published?: boolean;
+  labelIds?: number[];
 }

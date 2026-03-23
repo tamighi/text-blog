@@ -5,7 +5,7 @@ model Post {
 
   content   String
 
-  postLabels PostLabel[]
+  labels Label[]
   highlights Highlight[]
 
   createdAt DateTime @default(now())

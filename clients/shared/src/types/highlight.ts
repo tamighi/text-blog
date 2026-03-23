@@ -23,3 +23,7 @@ export interface UpdateHighlightDto {
   comment?: string;
   labelIds?: number[]
 }
+
+export type HighlightWithOptionalId = Omit<Highlight, "id"> &
+  Partial<Pick<Highlight, "id">>;
+

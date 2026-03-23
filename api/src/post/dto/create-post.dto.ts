@@ -1,5 +1,5 @@
 import { ApiProperty } from "@nestjs/swagger";
-import { IsString, MaxLength } from "class-validator";
+import { IsString, MaxLength, IsArray, IsInt } from "class-validator";
 
 export class CreatePostDto {
   @ApiProperty()
@@ -10,4 +10,9 @@ export class CreatePostDto {
   @ApiProperty()
   @IsString()
   readonly content: string;
+
+  @ApiProperty({ type: [Number] })
+  @IsArray()
+  @IsInt({ each: true })
+  readonly labelIds?: number[];
 }

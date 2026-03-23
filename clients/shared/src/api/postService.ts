@@ -14,18 +14,18 @@ class PostsApi extends BaseApi {
     });
   }
 
-  get(id: string): Promise<Post> {
+  get(id: number): Promise<Post> {
     return http<Post>(`${this.base}/post/${id}`);
   }
 
-  update(id: string, dto: UpdatePostDto): Promise<Post> {
+  update(id: number, dto: UpdatePostDto): Promise<Post> {
     return http<Post>(`${this.base}/post/${id}`, {
       method: "PATCH",
       body: JSON.stringify(dto),
     });
   }
 
-  remove(id: string): Promise<{ id: string }> {
+  remove(id: number): Promise<{ id: string }> {
     return http<{ id: string }>(`${this.base}/post/${id}`, {
       method: "DELETE",
     });

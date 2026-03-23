@@ -1,12 +1,11 @@
 import Autocomplete from "@/components/Autocomplete";
 import Button from "@/components/Button";
 import Dialog from "@/components/Dialog";
-import useCreatePostLabel from "@/hooks/query/useCreatePostLabel";
 import useLabels from "@/hooks/query/useLabels";
-import { type Label } from "@shared/types/label";
+import useUpdatePost from "@/hooks/query/useUpdatePost";
+import type { Post } from "@shared/types/post";
 import React from "react";
 import { useToast } from "../toast/ToastProvider";
-import type { Post } from "@shared/types/post";
 
 type Props = {
   open?: boolean;
@@ -16,10 +15,9 @@ type Props = {
 
 const CreatePostLabelDialog = ({ open = false, onClose, post }: Props) => {
   const [labelInput, setLabelInput] = React.useState("");
-  const [comment, setComment] = React.useState("");
 
   const { toast } = useToast();
-  const { mutate, isPending } = useCreatePostLabel({
+  const { mutate, isPending } = useUpdatePost({
     onSuccess: () => {
       toast({ content: "Label assigned." });
       _onClose();
@@ -32,7 +30,7 @@ const CreatePostLabelDialog = ({ open = false, onClose, post }: Props) => {
   const labelOptions = React.useMemo(
     () =>
       labels
-        .filter((l) => !post.postLabels.some((pl) => pl.id === l.id))
+        .filter((l) => !post.labels.some((pl) => pl.id === l.id))
         .map((l) => l.content),
     [labels],
   );
@@ -43,7 +41,6 @@ const CreatePostLabelDialog = ({ open = false, onClose, post }: Props) => {
 
   const reset = () => {
     setLabelInput("");
-    setComment("");
   };
 
   const _onClose = () => {
@@ -53,7 +50,11 @@ const CreatePostLabelDialog = ({ open = false, onClose, post }: Props) => {
 
   const onCreatePostLabel = () => {
     const newLabel = labels.find((l) => l.content === labelInput);
-    mutate({ postId: post.id, labelId: newLabel!.id, comment });
+
+    mutate({
+      id: post.id,
+      dto: { labelIds: [...post.labels.map((l) => l.id), newLabel!.id] },
+    });
   };
 
   return (
@@ -66,12 +67,6 @@ const CreatePostLabelDialog = ({ open = false, onClose, post }: Props) => {
             options={labelOptions}
             onChange={onAutocompleteChange}
           />
-          <textarea
-            className="input"
-            placeholder="Comment"
-            value={comment}
-            onChange={(e) => setComment(e.target.value)}
-          ></textarea>
         </div>
         <div className="flex gap-4 items-center justify-end">
           <Button onClick={onClose}>Cancel</Button>

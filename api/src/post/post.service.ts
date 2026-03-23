@@ -9,12 +9,23 @@ export class PostService {
   constructor(private readonly prisma: PrismaService) {}
 
   create(dto: CreatePostDto) {
-    return this.prisma.post.create({ data: dto });
+    const { labelIds, ...data } = dto;
+
+    return this.prisma.post.create({
+      data: {
+        ...data,
+        ...(labelIds && {
+          labels: {
+            connect: labelIds.map((id) => ({ id })),
+          },
+        }),
+      },
+    });
   }
 
   findAll() {
     const include: PostInclude = {
-      postLabels: { include: { label: true } },
+      labels: true,
       highlights: { include: { labels: true } },
     };
 
@@ -28,7 +39,19 @@ export class PostService {
   }
 
   update(id: number, dto: UpdatePostDto) {
-    return this.prisma.post.update({ where: { id }, data: dto });
+    const { labelIds, ...data } = dto;
+
+    return this.prisma.post.update({
+      where: { id },
+      data: {
+        ...data,
+        ...(labelIds && {
+          labels: {
+            set: labelIds.map((id) => ({ id })),
+          },
+        }),
+      },
+    });
   }
 
   remove(id: number) {

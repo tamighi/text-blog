@@ -1,5 +1,11 @@
-import { ApiPropertyOptional } from "@nestjs/swagger";
-import { IsOptional, IsString, MaxLength } from "class-validator";
+import { ApiProperty, ApiPropertyOptional } from "@nestjs/swagger";
+import {
+  IsArray,
+  IsInt,
+  IsOptional,
+  IsString,
+  MaxLength,
+} from "class-validator";
 
 export class UpdatePostDto {
   @ApiPropertyOptional()
@@ -12,4 +18,9 @@ export class UpdatePostDto {
   @IsOptional()
   @IsString()
   readonly content?: string;
+
+  @ApiProperty({ type: [Number] })
+  @IsArray()
+  @IsInt({ each: true })
+  readonly labelIds?: number[];
 }
