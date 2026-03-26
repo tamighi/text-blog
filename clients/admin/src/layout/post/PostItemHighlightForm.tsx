@@ -1,11 +1,10 @@
-import Autocomplete from "@/components/Autocomplete";
 import Button from "@/components/Button";
 import useCreateHighlight from "@/hooks/query/useCreateHighlight";
-import useLabels from "@/hooks/query/useLabels";
 import type { HighlightWithOptionalId } from "@shared/types/highlight";
 import type { Label } from "@shared/types/label";
 import React from "react";
 import LabelChip from "../label/LabelChip";
+import LabelPicker from "../label/LabelPicker";
 import { useToast } from "../toast/ToastProvider";
 
 type Props = {
@@ -13,8 +12,6 @@ type Props = {
 };
 
 const PostItemHighlightForm = ({ highlight }: Props) => {
-  const [labelInput, setLabelInput] = React.useState("");
-
   const [comment, setComment] = React.useState(highlight.comment!);
   const [highlightLabels, setHighlightLabels] = React.useState<Label[]>([]);
 
@@ -23,23 +20,13 @@ const PostItemHighlightForm = ({ highlight }: Props) => {
     setComment(highlight.comment!);
   }, [highlight]);
 
-  const { data: allLabels = [] } = useLabels();
-  const labelOptions = React.useMemo(
-    () =>
-      allLabels
-        .filter((l) => !highlightLabels.some((h) => h.id === l.id))
-        .map((l) => l.content),
-    [allLabels, highlightLabels],
+  const labelFilter = React.useCallback(
+    (labels: Label[]) =>
+      labels.filter((l) => !highlightLabels.some((hl) => hl.id === l.id)),
+    [highlightLabels],
   );
-
-  const onAutocompleteChange = (content: string) => {
-    const newLabel = allLabels.find((v) => v.content === content);
-    if (newLabel) {
-      setLabelInput("");
-      setHighlightLabels((hLs) => [...hLs, newLabel]);
-    } else {
-      setLabelInput(content);
-    }
+  const onLabelClick = (newLabel: Label) => {
+    setHighlightLabels((hLs) => [...hLs, newLabel]);
   };
 
   const onDelete = (label: Label) => {
@@ -67,18 +54,12 @@ const PostItemHighlightForm = ({ highlight }: Props) => {
   return (
     <div className="flex flex-col gap-4">
       <h2>Highlight form</h2>
-      <Autocomplete
-        placeholder="Find label"
-        options={labelOptions}
-        value={labelInput}
-        onChange={onAutocompleteChange}
-      />
+      <LabelPicker onLabelClick={onLabelClick} filter={labelFilter} />
       <div className="flex gap-4">
         {highlightLabels.map((label) => (
           <LabelChip
             label={label}
             onDelete={() => onDelete(label)}
-            confirmOnDelete={false}
             key={label.id}
           />
         ))}

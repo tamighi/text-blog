@@ -1,9 +1,9 @@
-import Button from "@/components/Button";
 import useUpdatePost from "@/hooks/query/useUpdatePost";
+import type { Label } from "@shared/types/label";
 import type { Post } from "@shared/types/post";
 import React from "react";
 import LabelChip from "../label/LabelChip";
-import CreatePostLabelDialog from "../postLabel/CreatePostLabelDialog";
+import LabelPicker from "../label/LabelPicker";
 import { useToast } from "../toast/ToastProvider";
 
 type Props = {
@@ -13,23 +13,43 @@ type Props = {
 };
 
 const PostItemHeader = ({ post, onClick, active }: Props) => {
-  const [open, setOpen] = React.useState(false);
-
   const { toast } = useToast();
 
   const { mutate } = useUpdatePost({
-    onSuccess: () => toast({ content: "Label deleted" }),
     onError: () => toast({ content: "Error" }),
   });
 
   const onDelete = (labelId: number) => {
-    mutate({
-      id: post.id,
-      dto: {
-        labelIds: post.labels.filter((l) => l.id !== labelId).map((l) => l.id),
+    mutate(
+      {
+        id: post.id,
+        dto: {
+          labelIds: post.labels
+            .filter((l) => l.id !== labelId)
+            .map((l) => l.id),
+        },
       },
-    });
+      { onSuccess: () => toast({ content: "Label deleted" }) },
+    );
   };
+
+  const onLabelClick = (newLabel: Label) => {
+    mutate(
+      {
+        id: post.id,
+        dto: {
+          labelIds: [...post.labels.map((l) => l.id), newLabel.id],
+        },
+      },
+      { onSuccess: () => toast({ content: "Label added" }) },
+    );
+  };
+
+  const labelFilter = React.useCallback(
+    (labels: Label[]) =>
+      labels.filter((l) => !post.labels.some((pl) => l.id === pl.id)),
+    [post],
+  );
 
   return (
     <div className="flex items-center gap-4">
@@ -41,13 +61,9 @@ const PostItemHeader = ({ post, onClick, active }: Props) => {
         <LabelChip label={l} key={l.id} onDelete={() => onDelete(l.id)} />
       ))}
 
-      {active && <Button onClick={() => setOpen(true)}>+</Button>}
-
-      <CreatePostLabelDialog
-        post={post}
-        open={open}
-        onClose={() => setOpen(false)}
-      />
+      {active && (
+        <LabelPicker onLabelClick={onLabelClick} filter={labelFilter} />
+      )}
     </div>
   );
 };
