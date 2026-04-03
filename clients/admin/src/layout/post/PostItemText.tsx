@@ -99,6 +99,9 @@ const PostItemText = ({ post, active, onClear }: Props) => {
     [],
   );
 
+  const [newHighlight, setNewHighlight] =
+    React.useState<HighlightWithOptionalId | null>(null);
+
   React.useEffect(() => {
     setHighlights(post.highlights);
   }, [post]);
@@ -110,16 +113,13 @@ const PostItemText = ({ post, active, onClear }: Props) => {
 
       if (length <= 0) return;
 
-      setHighlights((prev) => [
-        ...prev,
-        {
-          start: startOffset,
-          length,
-          postId: post.id,
-          labels: [],
-          comment: "",
-        },
-      ]);
+      setNewHighlight({
+        start: startOffset,
+        length,
+        postId: post.id,
+        labels: [],
+        comment: "",
+      });
     },
     [post],
   );
@@ -129,8 +129,12 @@ const PostItemText = ({ post, active, onClear }: Props) => {
   useTextSelection(ref, { enabled: active, onSelect, onClear });
 
   const rendered = React.useMemo(() => {
-    return renderHighlightedText(post.content, highlights);
-  }, [post.content, highlights]);
+    const allHighlights = newHighlight
+      ? [...highlights, newHighlight]
+      : highlights;
+
+    return renderHighlightedText(post.content, allHighlights);
+  }, [post.content, highlights, newHighlight]);
 
   return (
     <div
