@@ -3,7 +3,10 @@ import {
   useTextSelection,
   type TextSelectionEvent,
 } from "@/hooks/useTextSelection";
-import type { HighlightWithOptionalId } from "@shared/types/highlight";
+import type {
+  Highlight,
+  HighlightWithOptionalId,
+} from "@shared/types/highlight";
 import type { Post } from "@shared/types/post";
 import React from "react";
 import HighlightedText from "./highlights/HighlightedText";
@@ -28,9 +31,7 @@ const hasOverlap = (
 };
 
 const PostItemContent = ({ post, active }: Props) => {
-  const [highlights, setHighlights] = React.useState<HighlightWithOptionalId[]>(
-    [],
-  );
+  const [highlights, setHighlights] = React.useState<Highlight[]>([]);
 
   const [activeHighlight, setActiveHighlight] =
     React.useState<HighlightWithOptionalId>();
@@ -43,11 +44,10 @@ const PostItemContent = ({ post, active }: Props) => {
     (e: TextSelectionEvent) => {
       const { startOffset, endOffset } = e.range;
       const length = endOffset - startOffset;
+
       window.getSelection()?.removeAllRanges();
 
-      const highlightsWithId = highlights.filter((h) => !!h.id);
-      if (length <= 0 || hasOverlap(startOffset, endOffset, highlightsWithId))
-        return;
+      if (length <= 0 || hasOverlap(startOffset, endOffset, highlights)) return;
 
       const newHighlight = {
         start: startOffset,
@@ -58,7 +58,6 @@ const PostItemContent = ({ post, active }: Props) => {
       };
 
       setActiveHighlight(newHighlight);
-      setHighlights([...highlightsWithId, newHighlight]);
     },
     [post, highlights],
   );
@@ -79,7 +78,11 @@ const PostItemContent = ({ post, active }: Props) => {
                 : "max-h-12 overflow-hidden"
             }`}
         >
-          <HighlightedText highlights={highlights} text={post.content} />
+          <HighlightedText
+            highlights={highlights}
+            activeHighlight={activeHighlight}
+            text={post.content}
+          />
         </div>
 
         {active && <Button className="self-start">Save</Button>}
