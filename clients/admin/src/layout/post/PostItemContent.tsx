@@ -14,22 +14,18 @@ type Props = {
 const PostItemContent = ({ post, active }: Props) => {
   const [highlight, setHighlight] = React.useState<HighlightWithOptionalId>();
 
-  const onSelect = (selection: TextSelectionEvent) => {
-    const { range } = selection;
-
-    setHighlight({
-      length: range.endOffset - range.startOffset,
-      start: range.startOffset,
-      postId: post.id,
-      labels: [],
-      comment: "",
-    });
+  const onNewHighlight = (h: HighlightWithOptionalId) => {
+    setHighlight(h);
   };
 
   return (
     <div className="flex gap-4 items-start">
       <div className="flex flex-col gap-8">
-        <PostItemText onSelect={onSelect} post={post} active={active} />
+        <PostItemText
+          onNewHighlight={onNewHighlight}
+          post={post}
+          active={active}
+        />
         {active && <Button className="self-start">Save</Button>}
       </div>
       <PostItemHighlights highlight={highlight} post={post} active={active} />

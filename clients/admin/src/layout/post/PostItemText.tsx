@@ -10,11 +10,24 @@ import HighlightedText from "./highlights/HighlightedText";
 type Props = {
   post: Post;
   active: boolean;
-  onSelect?: (e: TextSelectionEvent) => void;
+  onNewHighlight?: (h: HighlightWithOptionalId) => void;
   onClear?: () => void;
 };
 
-const PostItemText = ({ post, active, onClear }: Props) => {
+const hasOverlap = (
+  start: number,
+  end: number,
+  highlights: HighlightWithOptionalId[],
+) => {
+  return highlights.some((h) => {
+    const hStart = h.start;
+    const hEnd = h.start + h.length;
+
+    return start < hEnd && end > hStart;
+  });
+};
+
+const PostItemText = ({ post, active, onClear, onNewHighlight }: Props) => {
   const [highlights, setHighlights] = React.useState<HighlightWithOptionalId[]>(
     [],
   );
@@ -31,17 +44,22 @@ const PostItemText = ({ post, active, onClear }: Props) => {
       const { startOffset, endOffset } = e.range;
       const length = endOffset - startOffset;
 
-      if (length <= 0) return;
+      if (length <= 0 || hasOverlap(startOffset, endOffset, highlights)) return;
 
-      setNewHighlight({
+      const newHighlight = {
         start: startOffset,
         length,
         postId: post.id,
         labels: [],
         comment: "",
-      });
+      };
+
+      setNewHighlight(newHighlight);
+      onNewHighlight?.(newHighlight);
+
+      window.getSelection()?.removeAllRanges();
     },
-    [post],
+    [post, highlights],
   );
 
   const ref = React.useRef<HTMLDivElement>(null);
