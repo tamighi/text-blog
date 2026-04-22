@@ -62,6 +62,10 @@ const PostItemContent = ({ post, active }: Props) => {
     [post, highlights],
   );
 
+  const onHighlightClick = (h: Highlight) => {
+    setActiveHighlight(h);
+  };
+
   const ref = React.useRef<HTMLDivElement>(null);
 
   useTextSelection(ref, { enabled: active, onSelect });
@@ -87,11 +91,13 @@ const PostItemContent = ({ post, active }: Props) => {
 
         {active && <Button className="self-start">Save</Button>}
       </div>
-      <PostItemHighlights
-        highlight={activeHighlight}
-        post={post}
-        active={active}
-      />
+      {active && (
+        <PostItemHighlights
+          highlight={activeHighlight}
+          post={post}
+          onHighlightClick={onHighlightClick}
+        />
+      )}
     </div>
   );
 };
