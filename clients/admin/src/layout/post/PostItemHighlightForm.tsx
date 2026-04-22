@@ -53,7 +53,6 @@ const PostItemHighlightForm = ({ highlight }: Props) => {
 
   return (
     <div className="flex flex-col gap-4">
-      <h2>Highlight form</h2>
       <LabelPicker onLabelClick={onLabelClick} filter={labelFilter} />
       <div className="flex gap-4">
         {highlightLabels.map((label) => (

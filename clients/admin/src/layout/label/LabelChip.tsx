@@ -4,7 +4,7 @@ import React from "react";
 
 type Props = {
   label: Label;
-  onDelete: () => void;
+  onDelete?: () => void;
   popoverNode?: React.ReactNode;
 };
 
@@ -17,13 +17,15 @@ const LabelChip = ({ label, onDelete, popoverNode }: Props) => {
         ref={labelRef}
         className="px-2 py-1 rounded-full relative bg-elevation-1"
       >
-        <button
-          onClick={onDelete}
-          className="flex items-center justify-center absolute w-5 h-5 -right-2
-            -top-3 bg-elevation-2 rounded-full cursor-pointer"
-        >
-          ×
-        </button>
+        {onDelete && (
+          <button
+            onClick={onDelete}
+            className="flex items-center justify-center absolute w-5 h-5
+              -right-2 -top-3 bg-elevation-2 rounded-full cursor-pointer"
+          >
+            ×
+          </button>
+        )}
         <span className="text-secondary">{label.content}</span>
       </div>
       {popoverNode && <Popover anchorRef={labelRef}>{popoverNode}</Popover>}

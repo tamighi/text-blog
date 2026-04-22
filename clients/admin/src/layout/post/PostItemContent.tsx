@@ -71,10 +71,10 @@ const PostItemContent = ({ post, active }: Props) => {
       <div className="flex flex-col gap-8">
         <div
           ref={ref}
-          className={`mt-2 text-md text-fg-secondary w-[36vw]
+          className={`mt-2 text-md text-fg-secondary pr-2 w-100
             whitespace-break-spaces ${
               active
-                ? "max-h-[75vh] overflow-scroll"
+                ? "max-h-[65vh] overflow-scroll"
                 : "max-h-12 overflow-hidden"
             }`}
         >
