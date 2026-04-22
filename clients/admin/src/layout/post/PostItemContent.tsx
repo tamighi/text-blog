@@ -9,7 +9,9 @@ import type {
 } from "@shared/types/highlight";
 import type { Post } from "@shared/types/post";
 import React from "react";
-import HighlightedText from "./highlights/HighlightedText";
+import HighlightedText, {
+  type HighlightWithState,
+} from "./highlights/HighlightedText";
 import PostItemHighlights from "./PostItemHighlights";
 
 type Props = {
@@ -31,10 +33,11 @@ const hasOverlap = (
 };
 
 const PostItemContent = ({ post, active }: Props) => {
-  const [highlights, setHighlights] = React.useState<Highlight[]>([]);
-
-  const [activeHighlight, setActiveHighlight] =
-    React.useState<HighlightWithOptionalId>();
+  const [highlights, setHighlights] = React.useState<HighlightWithState[]>([]);
+  const activeHighlight = React.useMemo(
+    () => highlights.find((h) => h.state === "active"),
+    [highlights],
+  );
 
   React.useEffect(() => {
     setHighlights(post.highlights);
@@ -49,21 +52,49 @@ const PostItemContent = ({ post, active }: Props) => {
 
       if (length <= 0 || hasOverlap(startOffset, endOffset, highlights)) return;
 
-      const newHighlight = {
+      const newHighlight: HighlightWithState = {
         start: startOffset,
         length,
         postId: post.id,
         labels: [],
         comment: "",
+        state: "active",
       };
 
-      setActiveHighlight(newHighlight);
+      setHighlights((hs) => hs.map((h) => ({ ...h, state: undefined })));
+      setHighlights((hs) => [...hs.filter((h) => !!h.id)]);
+      setHighlights((hs) => [...hs, newHighlight]);
     },
     [post, highlights],
   );
 
-  const onHighlightClick = (h: Highlight) => {
-    setActiveHighlight(h);
+  const onHighlightClick = (clicked: Highlight) => {
+    setHighlights((hs) => hs.filter((h) => !!h.id));
+    setHighlights((hs) => {
+      return hs.map((h) => ({
+        ...h,
+        state: clicked.id === h.id ? "active" : undefined,
+      }));
+    });
+  };
+
+  const onHighlightLeave = () => {
+    setHighlights((hs) => {
+      return hs.map((h) => ({
+        ...h,
+        state: h.state === "hovered" ? undefined : h.state,
+      }));
+    });
+  };
+
+  const onHighlightOver = (hovered: HighlightWithState) => {
+    setHighlights((hs) => {
+      return hs.map((h) => ({
+        ...h,
+        state:
+          hovered.id === h.id && h.state === undefined ? "hovered" : h.state,
+      }));
+    });
   };
 
   const ref = React.useRef<HTMLDivElement>(null);
@@ -82,20 +113,18 @@ const PostItemContent = ({ post, active }: Props) => {
                 : "max-h-12 overflow-hidden"
             }`}
         >
-          <HighlightedText
-            highlights={highlights}
-            activeHighlight={activeHighlight}
-            text={post.content}
-          />
+          <HighlightedText highlights={highlights} text={post.content} />
         </div>
 
         {active && <Button className="self-start">Save</Button>}
       </div>
       {active && (
         <PostItemHighlights
-          highlight={activeHighlight}
           post={post}
           onHighlightClick={onHighlightClick}
+          onHighlightOver={onHighlightOver}
+          onHighlightLeave={onHighlightLeave}
+          activeHighlight={activeHighlight}
         />
       )}
     </div>

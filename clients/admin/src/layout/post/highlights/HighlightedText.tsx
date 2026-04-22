@@ -1,22 +1,17 @@
-import type {
-  HighlightWithOptionalId,
-  Highlight,
-} from "@shared/types/highlight";
+import type { HighlightWithOptionalId } from "@shared/types/highlight";
 import React from "react";
+
+export type HighlightWithState = HighlightWithOptionalId & {
+  state?: "hovered" | "active";
+};
 
 type Props = {
   text: string;
-  highlights: Highlight[];
-  activeHighlight?: HighlightWithOptionalId;
+  highlights: HighlightWithState[];
 };
 
-const HighlightedText = ({ text, highlights, activeHighlight }: Props) => {
-  const allHighlights =
-    !!activeHighlight && !activeHighlight.id
-      ? [...highlights, activeHighlight]
-      : highlights;
-
-  const sorted = [...allHighlights].sort((a, b) => a.start - b.start);
+const HighlightedText = ({ text, highlights }: Props) => {
+  const sorted = [...highlights].sort((a, b) => a.start - b.start);
   const result: React.ReactNode[] = [];
 
   let cursor = 0;
@@ -32,7 +27,12 @@ const HighlightedText = ({ text, highlights, activeHighlight }: Props) => {
       <span
         key={h.id ?? `i_${i}`}
         style={{
-          backgroundColor: activeHighlight?.id === h.id ? "orange" : "yellow",
+          backgroundColor:
+            h.state === "active"
+              ? "orange"
+              : h.state === "hovered"
+                ? "red"
+                : "yellow",
         }}
       >
         {text.slice(h.start, end)}
